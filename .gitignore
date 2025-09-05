@@ -242,5 +242,3 @@ JOSS_paper_for_arXiv/paper.out
 JOSS_paper_for_arXiv/paper.synctex.gz
 JOSS_paper_for_arXiv/*.bbl
 JOSS_paper_for_arXiv/*.blg
-# Local docs build cache (if you later add Sphinx/ mkdocs)
-docs/_build/
