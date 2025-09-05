@@ -228,10 +228,6 @@ results/**
 !results/non_gaussian/3.0e+15_0.1/distributed_spectrum.txt
 !results/non_gaussian/3.0e+15_0.1/mass_distribution.txt
 
-# BlackHawk data directory: keep the folder, not the contents
-blackhawk_data/**
-!blackhawk_data/.gitkeep
-
 # Archives and large bundles
 *.zip
 *.tar
