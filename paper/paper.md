@@ -16,7 +16,7 @@ temperature of black holes is inversely proportional to the square of
 their mass, conventional stellar mass black holes are expected to emit
 too little radiation to ever be detected. However, primordial black
 holes (PBHs) that could have formed from the collapse of primordial
-perturbations in the early universe can provide detectable signals .
+perturbations in the early universe can provide detectable signals.
 PBHs with mass less than $10^{14}$ grams would have evaporated via
 Hawking radiation long before the present age of the universe. Upcoming
 gamma-ray telescopes such as e-ASTROGAM and AMEGO-X will be sensitive
@@ -34,52 +34,72 @@ of four primary components; direct/primary Hawking radiation, secondary
 radiation, final-state radiation, and in-flight annihilation.
 
 Direct Hawking radiation accounts for all kinematically allowed
-elementary particles formed at the event Horizon , including gamma-ray
+elementary particles formed at the event horizon, including gamma-ray
 photons. Secondary radiation originates from the decay of unstable
 particles and contributes significantly at lower energies. We rely on
 `BlackHawk` to evaluate the gamma-ray primary and secondary spectral
 components. `BlackHawk` uses `PYTHIA` for the modeling of the
 hadronization and decay processes leading to the secondary spectra.
 Final-state radiation originates from relativistic electrons and
-positrons and has a differential spectrum given by
+positrons and has a differential spectrum given by Eq. ([1](#eq-FSRRate)):
+
+<a id="eq-FSRRate"></a>
 
 $$
-\frac{dN_{\gamma}^{\text{FSR}}}{dE_{\gamma}} = \frac{\alpha}{2\pi} \int dE_{e^{+}}
-\frac{dN_{e^{+}}}{dE_{e^{+}}} \left( \frac{2}{E_{\gamma}} + \frac{E_{\gamma}}{E_{e^{+}}^2} - \frac{2}{E_{e^{+}}}
-\right) \left[ \ln \left( \frac{2E_{e^{+}}+(E_{e^{+}} - E_{\gamma})}{m_{e^{+}}^2} \right) - 1 \right],
+\frac{dN_{\gamma}^{\text{FSR}}}{dE_{\gamma}}
+= \frac{\alpha}{2\pi} \int dE_{e^{+}}\,
+\frac{dN_{e^{+}}}{dE_{e^{+}}}
+\left(
+\frac{2}{E_{\gamma}} + \frac{E_{\gamma}}{E_{e^{+}}^{2}} - \frac{2}{E_{e^{+}}}
+\right)
+\left[
+\ln\!\left(\frac{2E_{e^{+}}+(E_{e^{+}} - E_{\gamma})}{m_{e}^{2}}\right) - 1
+\right]
+\tag{1}
 $$
 
 where $\alpha = 137.037$ is the fine structure constant, $E_{e^{+}}$
 is the kinetic energy of a given positron ($e^{+}$), $E_{\gamma}$ is
-the energy of the emitted photon, $m_{e^{+}} = 0.511$ MeV is the rest
+the energy of the emitted photon, $m_{e} = 0.511\ \mathrm{MeV}$ is the rest
 mass of the electron, and $\frac{dN_{e^{+}}}{dE_{e^{+}}}$ the
 differential spectrum of emitted electrons/positrons. In addition to the
 previously mentioned components, gamma-rays can be produced through
 pair-annihilation of positrons with interstellar medium electrons. This
-is known as in-flight annihilation and its differential spectrum is
+is known as in-flight annihilation and its differential spectrum is (Eq. ([2](#eq-IARate))):
+
+<a id="eq-IARate"></a>
 
 $$
-\frac{dN_{\gamma}^{\text{IA}}}{dE_{\gamma}} = \frac{\pi \alpha^2 n_H}{m_e} \int_{m_e}^{\infty} dE_{e^{+}} \frac{dN_{e^{+}}}{dE_{e^{+}}} \int_{E_{\min}}^{E_{e^{+}}} \frac{dE}{dE/dx} \frac{P_{E_{e^{+}} \to E}}{(E^2 - m_e^2)}
-\times \left( -2 - \frac{(E + m_e)(m_e^2 (E + m_e) + E_{\gamma}^2 (E + 3m_e) - E_{\gamma} (E + m_e)(E + 3m_e))}{E_{\gamma}^2 (E - E_{\gamma} + m_e)^2} \right).
+\frac{dN_{\gamma}^{\text{IA}}}{dE_{\gamma}}
+= \frac{\pi \alpha^2 n_H}{m_e}
+\int_{m_e}^{\infty} dE_{e^{+}}\,
+\frac{dN_{e^{+}}}{dE_{e^{+}}}
+\int_{E_{\min}}^{E_{e^{+}}} \frac{dE}{dE/dx}\,
+\frac{P_{E_{e^{+}} \to E}}{(E^2 - m_e^2)}
+\left(
+-2 - \frac{(E + m_e)\big[m_e^2 (E + m_e) + E_{\gamma}^2 (E + 3m_e) - E_{\gamma} (E + m_e)(E + 3m_e)\big]}{E_{\gamma}^2 (E - E_{\gamma} + m_e)^2}
+\right)
+\tag{2}
 $$
 
-We take $n_H = 1\, {\textrm{cm}^{-3}}$ as the density of interstellar
+We take $n_H = 1\, \mathrm{cm}^{-3}$ as the density of interstellar
 medium hydrogen (and by extension electrons). $E_{e^{+}}$ is again the
 initial positron total energy, $E$ is the final positron total energy,
 $dE/dx$ is the rate of positron energy lost per path via the
-Bethe-Bloch formula , $E_{\gamma}$ is the resulting photon energy from
+Bethe-Bloch formula, $E_{\gamma}$ is the resulting photon energy from
 annihilation, and $P_{E_{e^{+}} \to E}$ is the probability of a
 particular positron of a given initial and final energy to decay. This
-probability matrix can be calculated as
+probability matrix can be calculated as (Eq. ([3](#eq-Ptrans))):
+
+<a id="eq-Ptrans"></a>
 
 $$
-P_{E_{e^{+}} \to E} = \exp\Biggl(
-  - n_H \int_{E}^{E_{e^{+}}} \sigma_{\mathrm{ann}}(E') \,\frac{dE'}{dx}\, dE'
-\Biggr),
+P_{E_{e^{+}} \to E} =
+\exp\!\left(
+  - n_H \int_{E}^{E_{e^{+}}} \sigma_{\mathrm{ann}}(E')\, \frac{dE'}{dx}\, dE'
+\right)
+\tag{3}
 $$
-
-where $\sigma_{ann}$ is the cross section of annihilation for
-positrons of a given energy.
 
 In Fig. 1, we give the individual gamma-ray spectral components as well
 as their sum for a PBH of mass $3\times 10^{15}$ grams.
@@ -94,24 +114,24 @@ Users can calculate the gamma-ray spectra from four types of PBH mass
 distributions. Those are, i) a monochromatic distribution with a mass to
 be set in the range of $5\times 10^{13}$ to $1\times 10^{19}$ grams,
 ii) a Gaussian distribution of PBH masses originating from a Gaussian
-distribution of density perturbations , iii) a more realistic
-non-Gaussian PBH mass distribution from and iv) a log-normal
+distribution of density perturbations, iii) a more realistic
+non-Gaussian PBH mass distribution, and iv) a log-normal
 distribution of PBH masses. In Fig. 2, we give the gamma-ray spectra
 from monochromatic and Gaussian PBH mass-distributions.
 
 ![Spectrum comparison](figures/spectrum_comparison.png)
 
-*The total gamma-ray spectrum per PBH, from a PBH of mass $3\times 10^{15}$ grams (blue line) and from a Gaussian distribution of density perturbations leading to a distribution of a mean mass of $3\times 10^{15}$ grams. $\sigma$ refers to the standard deviation of initial density perturbations .*
+*The total gamma-ray spectrum per PBH, from a PBH of mass $3\times 10^{15}$ grams (blue line) and from a Gaussian distribution of density perturbations leading to a distribution of a mean mass of $3\times 10^{15}$ grams. $\sigma$ refers to the standard deviation of initial density perturbations.*
 
 ## Software content
 
 `GammaPBHPlotter` was written in `Python` version 3.9 and is capable of
 running on Windows, Linux, and Mac. The main code uses five modules in
-its routine. Those being `colorama` , `numpy` , `matplotlib` , `tqdm`,
-and `scipy` . Since the software automatically checks and downloads all
+its routine. Those being `colorama`, `numpy`, `matplotlib`, `tqdm`,
+and `scipy`. Since the software automatically checks and downloads all
 missing modules, this requirement should not be a concern for the user.
-We provide the software in that include the code an a relevant manual.
+We provide the software in that include the code and a relevant manual.
 
-We acknowledge the use of `BlackHawk` . This material is based upon work
+We acknowledge the use of `BlackHawk`. This material is based upon work
 supported by the U.S. Department of Energy, Office of Science, Office of
 High Energy Physics, under Award No. DE-SC0022352.
