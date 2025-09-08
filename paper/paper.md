@@ -46,21 +46,24 @@ positrons and has a differential spectrum given by Eq. ([1](#eq-FSRRate)):
 <a id="eq-FSRRate"></a>
 
 $$
-\frac{dN_{\gamma}^{\text{FSR}}}{dE_{\gamma}}
-= \frac{\alpha}{2\pi} \int dE_{e^{+}}\,
+\frac{dN_{\gamma}^{\mathrm{FSR}}}{dE_{\gamma}}
+= \frac{\alpha}{2\pi} 
+\int dE_{e^{+}} \;
 \frac{dN_{e^{+}}}{dE_{e^{+}}}
 \left(
-\frac{2}{E_{\gamma}} + \frac{E_{\gamma}}{E_{e^{+}}^{2}} - \frac{2}{E_{e^{+}}}
+\frac{2}{E_{\gamma}} 
++ \frac{E_{\gamma}}{E_{e^{+}}^{2}}
+- \frac{2}{E_{e^{+}}}
 \right)
 \left[
-\ln\!\left(\frac{2E_{e^{+}}+(E_{e^{+}} - E_{\gamma})}{m_{e}^{2}}\right) - 1
+\ln\!\left(\frac{2E_{e^{+}} + (E_{e^{+}} - E_{\gamma})}{m_{e}^{2}}\right) - 1
 \right]
 \tag{1}
 $$
 
 where $\alpha = 137.037$ is the fine structure constant, $E_{e^{+}}$
 is the kinetic energy of a given positron ($e^{+}$), $E_{\gamma}$ is
-the energy of the emitted photon, $m_{e} = 0.511\ \mathrm{MeV}$ is the rest
+the energy of the emitted photon, $m_{e} = 0.511\,\mathrm{MeV}$ is the rest
 mass of the electron, and $\frac{dN_{e^{+}}}{dE_{e^{+}}}$ the
 differential spectrum of emitted electrons/positrons. In addition to the
 previously mentioned components, gamma-rays can be produced through
@@ -70,14 +73,17 @@ is known as in-flight annihilation and its differential spectrum is (Eq. ([2](#e
 <a id="eq-IARate"></a>
 
 $$
-\frac{dN_{\gamma}^{\text{IA}}}{dE_{\gamma}}
-= \frac{\pi \alpha^2 n_H}{m_e}
-\int_{m_e}^{\infty} dE_{e^{+}}\,
+\frac{dN_{\gamma}^{\mathrm{IA}}}{dE_{\gamma}}
+= \frac{\pi \alpha^{2} n_{H}}{m_{e}}
+\int_{m_{e}}^{\infty} dE_{e^{+}} \;
 \frac{dN_{e^{+}}}{dE_{e^{+}}}
-\int_{E_{\min}}^{E_{e^{+}}} \frac{dE}{dE/dx}\,
-\frac{P_{E_{e^{+}} \to E}}{(E^2 - m_e^2)}
+\int_{E_{\min}}^{E_{e^{+}}} 
+\frac{dE}{dE/dx} \;
+\frac{P_{E_{e^{+}}\to E}}{E^{2}-m_{e}^{2}}
 \left(
--2 - \frac{(E + m_e)\big[m_e^2 (E + m_e) + E_{\gamma}^2 (E + 3m_e) - E_{\gamma} (E + m_e)(E + 3m_e)\big]}{E_{\gamma}^2 (E - E_{\gamma} + m_e)^2}
+-2 - 
+\frac{(E+m_{e})\big[m_{e}^{2}(E+m_{e}) + E_{\gamma}^{2}(E+3m_{e}) - E_{\gamma}(E+m_{e})(E+3m_{e})\big]}
+{E_{\gamma}^{2}(E - E_{\gamma} + m_{e})^{2}}
 \right)
 \tag{2}
 $$
@@ -86,7 +92,7 @@ We take $n_H = 1\, \mathrm{cm}^{-3}$ as the density of interstellar
 medium hydrogen (and by extension electrons). $E_{e^{+}}$ is again the
 initial positron total energy, $E$ is the final positron total energy,
 $dE/dx$ is the rate of positron energy lost per path via the
-Bethe-Bloch formula, $E_{\gamma}$ is the resulting photon energy from
+Bethe–Bloch formula, $E_{\gamma}$ is the resulting photon energy from
 annihilation, and $P_{E_{e^{+}} \to E}$ is the probability of a
 particular positron of a given initial and final energy to decay. This
 probability matrix can be calculated as (Eq. ([3](#eq-Ptrans))):
@@ -94,9 +100,10 @@ probability matrix can be calculated as (Eq. ([3](#eq-Ptrans))):
 <a id="eq-Ptrans"></a>
 
 $$
-P_{E_{e^{+}} \to E} =
+P_{E_{e^{+}}\to E} =
 \exp\!\left(
-  - n_H \int_{E}^{E_{e^{+}}} \sigma_{\mathrm{ann}}(E')\, \frac{dE'}{dx}\, dE'
+- n_{H} \int_{E}^{E_{e^{+}}} 
+\sigma_{\mathrm{ann}}(E') \, \frac{dE'}{dx}\, dE'
 \right)
 \tag{3}
 $$
