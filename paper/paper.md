@@ -1,4 +1,4 @@
-# Summary
+﻿# Summary
 
 We present `GammaPBHPlotter`, a public Python code for calculating and
 plotting the Hawking radiation gamma-ray spectra of primordial black
@@ -42,7 +42,7 @@ components. `BlackHawk` uses `PYTHIA` for the modeling of the
 hadronization and decay processes leading to the secondary spectra.
 Final-state radiation originates from relativistic electrons and
 positrons and has a differential spectrum given by
-Eq. <span style="color: blue"><a href="#eq:FSRRate" data-reference-type="ref"
+Eq.Â <span style="color: blue"><a href="#eq:FSRRate" data-reference-type="ref"
 data-reference="eq:FSRRate">[eq:FSRRate]</a></span>,
 ``` math
 \frac{dN_{\gamma}^{\text{FSR}}}{dE_{\gamma}} = \frac{\alpha}{2\pi} \int dE_{e^{+}} \frac{dN_{e^{+}}}{dE_{e^{+}}} \left( \frac{2}{E_{\gamma}} + \frac{E_{\gamma}}{E_{e^{+}}^2} - \frac{2}{E_{e^{+}}} \right) \left[ \ln \left( \frac{2E_{e^{+}}+(E_{e^{+}} - E_{\gamma})}{m_{e^{+}}^2} \right) - 1 \right],
@@ -80,7 +80,7 @@ where $`\sigma_{ann}`$ is the cross section of annihilation for
 positrons of a given energy.
 
 In
-Fig. <span style="color: blue"><a href="#fig:PBHspectral_components" data-reference-type="ref"
+Fig.Â <span style="color: blue"><a href="#fig:PBHspectral_components" data-reference-type="ref"
 data-reference="fig:PBHspectral_components">1</a></span>, we give the
 individual gamma-ray spectral components as well as their sum for a PBH
 of mass $`3\times 10^{15}`$ grams.
@@ -88,7 +88,7 @@ of mass $`3\times 10^{15}`$ grams.
 <figure id="fig:PBHspectral_components">
 <img src="Monochromatic.png" style="width:60.0%" />
 <figcaption>The total gamma-ray spectrum of a <span
-class="math inline">3 × 10<sup>15</sup></span> grams PBH as well as its
+class="math inline">3â€…Ã—â€…10<sup>15</sup></span> grams PBH as well as its
 components.</figcaption>
 </figure>
 
@@ -101,7 +101,7 @@ ii) a Gaussian distribution of PBH masses originating from a Gaussian
 distribution of density perturbations , iii) a more realistic
 non-Gaussian PBH mass distribution from and iv) a log-normal
 distribution of PBH masses. In
-Fig. <span style="color: blue"><a href="#fig:PBHmass_distr_spectra" data-reference-type="ref"
+Fig.Â <span style="color: blue"><a href="#fig:PBHmass_distr_spectra" data-reference-type="ref"
 data-reference="fig:PBHmass_distr_spectra">2</a></span>, we give the
 gamma-ray spectra from monochromatic and Gaussian PBH
 mass-distributions.
@@ -109,11 +109,11 @@ mass-distributions.
 <figure id="fig:PBHmass_distr_spectra">
 <img src="Spectrum comparison.png" style="width:60.0%" />
 <figcaption>The total gamma-ray spectrum per PBH, from a PBH of mass
-<span class="math inline">3 × 10<sup>15</sup></span> grams (blue line)
+<span class="math inline">3â€…Ã—â€…10<sup>15</sup></span> grams (blue line)
 and from a Gaussian distribution of density perturbations leading to a
 distribution of a mean mass of <span
-class="math inline">3 × 10<sup>15</sup></span> grams. <span
-class="math inline"><em>σ</em></span> refers to the standard deviation
+class="math inline">3â€…Ã—â€…10<sup>15</sup></span> grams. <span
+class="math inline"><em>Ïƒ</em></span> refers to the standard deviation
 of initial density perturbations <span class="citation"
 data-cites="Biagetti:2021eep"></span>.</figcaption>
 </figure>
