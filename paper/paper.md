@@ -46,7 +46,6 @@ Eq.Â <span style="color: blue"><a href="#eq:FSRRate" data-reference-type="ref"
 data-reference="eq:FSRRate">[eq:FSRRate]</a></span>,
 ``` math
 \frac{dN_{\gamma}^{\text{FSR}}}{dE_{\gamma}} = \frac{\alpha}{2\pi} \int dE_{e^{+}} \frac{dN_{e^{+}}}{dE_{e^{+}}} \left( \frac{2}{E_{\gamma}} + \frac{E_{\gamma}}{E_{e^{+}}^2} - \frac{2}{E_{e^{+}}} \right) \left[ \ln \left( \frac{2E_{e^{+}}+(E_{e^{+}} - E_{\gamma})}{m_{e^{+}}^2} \right) - 1 \right],
-\label{eq:FSRRate}
 ```
 where $`\alpha = 137.037`$ is the fine structure constant, $`E_{e^{+}}`$
 is the kinetic energy of a given positron ($`e^{+}`$), $`E_{\gamma}`$ is
