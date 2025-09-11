@@ -70,9 +70,13 @@ INSTALLATION
 -Download and unzip folder
 -All necessary modules should self-install when running main.py
 	colorama
+	\\
     numpy
+	\\
   	matplotlib
-  	tqdm
+    \\
+	tqdm
+    \\
 	scipy
 
 To install and run **GammaPBHPlotter** locally:
