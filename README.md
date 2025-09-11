@@ -70,11 +70,29 @@ INSTALLATION
 -Download and unzip folder
 -All necessary modules should self-install when running main.py
 	colorama
-    	numpy
+    numpy
   	matplotlib
   	tqdm
 	scipy
 
+To install and run **GammaPBHPlotter** locally:
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/jcarlini-dot/GammaPBHPlotter.git
+cd GammaPBHPlotter
+
+# 2. (Optional) Create a virtual environment
+python3 -m venv venv
+source venv/bin/activate      # Linux/macOS
+venv\Scripts\activate         # Windows
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Run the program
+python main.py
+```
 INCLUDED FILES
 -----------------------------------
 - Procedures in src/:
