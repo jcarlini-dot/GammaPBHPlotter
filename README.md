@@ -95,10 +95,10 @@ As well as the papers published for the BlackHawk software.
    year={2021},
    month=oct }
 ```
-A. Arbey and J. Auffinger, Eur. Phys. J. C79 (2019) 693, arXiv:1905.04268 [gr-qc]
+A. Arbey and J. Auffinger, Eur. Phys. J. C79 (2019) 693, arXiv:1905.04268 [gr-qc]\
 A. Arbey and J. Auffinger, Eur. Phys. J. C81 (2021) 910, arXiv:2108.02737 [gr-qc]
 
-And if you use the gaussian or non-gaussian collapse for your paper, please cite Biagetti et al.
+And if you use the gaussian or non-gaussian collapse for your paper, please cite Biagetti et al.\
 
 M. Biagetti, V. De Luca, G. Franciolini, A. Kehagias and A. Riotto, Phys. Lett. B 820 (2021) 136602, arXiv:2105.07810 [astro-ph.CO].
 
