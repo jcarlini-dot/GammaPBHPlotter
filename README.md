@@ -1,6 +1,7 @@
 GammaPBHPlotter Version 1.0.0 (25 August 2025)
 -----------------------------------
-By John Carlini (jcarlini@oakland.edu) and Ilias Cholis (cholis@oakland.edu)
+By John Carlini (jcarlini@oakland.edu) and Ilias Cholis (cholis@oakland.edu)\
+Zenodo Link: https://zenodo.org/records/16944093
 
 INTRODUCTION
 -----------------------------------
