@@ -45,14 +45,56 @@ VIEWING PREVIOUS SPECTRA
 -----------------------------------
 If it is desired to compare spectra from different PBH mass distributions, the "view previous spectra" feature on the main menu is provided. Once selected, the user is presented with a screen similar to the main menu. The user first selects the type of PBH mass distribution, i.e. monochromatic, Gaussian, non-Gaussian, or lognormal. Then the user selects a peak mass. For the monochromatic distribution, the user may input any mass within the allowed range. For any of the other three cases, the program provides an indexed list of saved spectral files. Once all the desired file(s) are selected, the user will see a message which writes "→ Queued: {Method} {Peak Mass}" or "→ Queued: Gaussian Distribution 3.14e+15" to use the earlier example. This can be done multiple times for multiple different PBH distribution types. Once everything the user wishes to graph is selected, the user needs only to press 0 from the "previous spectra menu" to view all of them in two graphs. One of them is in units of MeV^-1 s^-1, the other in MeV s^-1. 
 
+
+ACKNOWLEDGMENTS AND CITATION
+-----------------------------------
 The program has been tested on windows 11, Mac, and Linux devices.
 
-If you use GammaPBHPlotter to write a paper, please cite:
+If you use **GammaPBHPlotter** in your research, please cite the JOSS paper (once published):
 
-linktocitation.placeholder
+> John Carlini and Ilias Cholis. *GammaPBHPlotter: A public Python code for calculating the Hawking gamma-ray spectra of primordial black holes*. Journal of Open Source Software, 2025. [doi:10.21105/joss.xxxxx](https://doi.org/10.21105/joss.xxxxx)
 
-As well as the paper published for the BlackHawk software.
+#### GammaPBHPlotter (JOSS paper)
+```bibtex
+@article{Carlini2025GammaPBHPlotter,
+  author  = {John Carlini and Ilias Cholis},
+  title   = {GammaPBHPlotter: A public Python code for calculating the Hawking gamma-ray spectra of primordial black holes},
+  journal = {Journal of Open Source Software},
+  year    = {2025},
+  doi     = {10.21105/joss.xxxxx}
+}
+```
 
+As well as the papers published for the BlackHawk software.
+
+```bibtex
+@article{Arbey_2019,
+   title={BlackHawk: a public code for calculating the Hawking evaporation spectra of any black hole distribution},
+   volume={79},
+   ISSN={1434-6052},
+   url={http://dx.doi.org/10.1140/epjc/s10052-019-7161-1},
+   DOI={10.1140/epjc/s10052-019-7161-1},
+   number={8},
+   journal={The European Physical Journal C},
+   publisher={Springer Science and Business Media LLC},
+   author={Arbey, Alexandre and Auffinger, Jérémy},
+   year={2019},
+   month=aug }
+```
+```bibtex
+@article{Arbey_2021,
+   title={Physics beyond the standard model with BlackHawk v2.0},
+   volume={81},
+   ISSN={1434-6052},
+   url={http://dx.doi.org/10.1140/epjc/s10052-021-09702-8},
+   DOI={10.1140/epjc/s10052-021-09702-8},
+   number={10},
+   journal={The European Physical Journal C},
+   publisher={Springer Science and Business Media LLC},
+   author={Arbey, Alexandre and Auffinger, Jérémy},
+   year={2021},
+   month=oct }
+```
 A. Arbey and J. Auffinger, Eur. Phys. J. C79 (2019) 693, arXiv:1905.04268 [gr-qc]
 A. Arbey and J. Auffinger, Eur. Phys. J. C81 (2021) 910, arXiv:2108.02737 [gr-qc]
 
@@ -60,7 +102,19 @@ And if you use the gaussian or non-gaussian collapse for your paper, please cite
 
 M. Biagetti, V. De Luca, G. Franciolini, A. Kehagias and A. Riotto, Phys. Lett. B 820 (2021) 136602, arXiv:2105.07810 [astro-ph.CO].
 
-arXiv:2105.07810
+```bibtex
+@article{Biagetti_2021,
+   title={The formation probability of primordial black holes},
+   volume={820},
+   ISSN={0370-2693},
+   url={http://dx.doi.org/10.1016/j.physletb.2021.136602},
+   DOI={10.1016/j.physletb.2021.136602},
+   journal={Physics Letters B},
+   publisher={Elsevier BV},
+   author={Biagetti, Matteo and De Luca, Valerio and Franciolini, Gabriele and Kehagias, Alex and Riotto, Antonio},
+   year={2021},
+   month=sep, pages={136602} }
+```
 
 INSTALLATION
 -----------------------------------
