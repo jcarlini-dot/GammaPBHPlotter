@@ -145,6 +145,74 @@ pip install -r requirements.txt
 # 4. Run the program
 python main.py
 ```
+
+FUNCTIONALITY TESTING
+-----------------------------------
+## Manual functional tests
+
+These human-run tests help verify that the software is working correctly. Copy/paste the shown commands from the repo root.
+
+```bash
+python main.py
+```
+
+### 1) Environment & data check
+- On first run, missing dependencies will be auto-installed.
+- You should **not** see:
+  ```
+  No valid mass folders found under: .../blackhawk_data
+  ```
+
+### 2) Monochromatic spectrum test
+- From the main menu, choose option **1**.
+- Enter a mass inside your `blackhawk_data` range, e.g.:
+  ```
+  3e15
+  ```
+- Expected behavior:
+  - A log–log plot appears with **Direct Hawking**, **Secondary**, **Inflight**, and **Final State** curves.
+  - Closing the figure spawns a second plot with $E^2 dN/dE$.
+  - On saving, a file like:
+    ```
+    results/monochromatic/3.00e+15_spectrum.txt
+    ```
+    should exist with 6 columns (E, Direct, Secondary, Inflight, FinalState, Total).
+
+### 3) Gaussian distribution test
+- From the main menu, choose option **2**.
+- Input a peak mass, e.g.:
+  ```
+  1e16
+  ```
+- Input σ in the valid range:
+  ```
+  0.05
+  ```
+- Input number of black holes, e.g.:
+  ```
+  1000
+  ```
+- Expected behavior:
+  - A progress bar appears.
+  - Two comparison plots appear: **dN/dE** and **E² dN/dE**.
+  - Closing them yields a histogram with the Gaussian PDF overlay.
+  - On save, files appear in:
+    ```
+    results/gaussian/1.0e+16_0.05/
+    ```
+    including `distributed_spectrum.txt` and `mass_distribution.txt`.
+
+### 4) View previous spectra test
+- From the main menu, choose option **5**.
+- Select one of your saved runs (monochromatic, gaussian, etc).
+- Expected behavior:
+  - Overlaid comparison plots of all selected runs.
+  - Curves should match those saved earlier.
+
+---
+
+If all of the above work without errors and produce the expected plots + files, the installation and code are functioning correctly.
+
 INCLUDED FILES
 -----------------------------------
 - Procedures in src/:
