@@ -1,7 +1,36 @@
+# Summary
+
+We present `GammaPBHPlotter`, a public Python code for calculating and
+plotting the Hawking radiation gamma-ray spectra of primordial black
+holes in the mass range of $10^{14}$ to $10^{18}$ grams. This tool
+allows users to compute the monochromatic and mass-averaged spectra of
+black holes over a range of parameters. We include the primary/direct
+Hawking emission, the secondary emission from the decay and
+hadronization of unstable particles, the final state radiation, and the
+in-flight annihilation gamma-ray emission components.
+
+# Statement of Need
+
+Hawking radiation remains an unobserved property of black holes. As the
+temperature of black holes is inversely proportional to the square of
+their mass, conventional stellar mass black holes are expected to emit
+too little radiation to ever be detected. However, primordial black
+holes (PBHs) that could have formed from the collapse of primordial
+perturbations in the early universe can provide detectable signals.
+PBHs with mass less than $10^{14}$ grams would have evaporated via
+Hawking radiation long before the present age of the universe. Upcoming
+gamma-ray telescopes such as e-ASTROGAM and AMEGO-X will be sensitive
+enough in the MeV range to detect the Hawking spectra of PBHs lying
+between this lower bound and $10^{19}$ grams. We have developed
+`GammaPBHPlotter`, an open-source software to simulate the exact
+gamma-ray spectra produced from different PBH mass distributions.
+
+# Hawking Spectra
+
 ## Modeling the emission components
 
 The gamma-ray spectrum of a PBH within the relevant mass range consists
-of four primary components; direct/primary Hawking radiation, secondary
+of four primary components: direct/primary Hawking radiation, secondary
 radiation, final-state radiation, and in-flight annihilation.
 
 Direct Hawking radiation accounts for all kinematically allowed
@@ -30,7 +59,7 @@ the energy of the emitted photon, $m_{e}=0.511\ \mathrm{MeV}$ is the rest
 mass of the electron, and $\frac{dN_{e^{+}}}{dE_{e^{+}}}$ is the
 differential spectrum of emitted electrons/positrons. In addition to the
 previously mentioned components, gamma rays can be produced through
-pair-annihilation of positrons with interstellar-medium electrons. This
+pair-annihilation of positrons with interstellar medium electrons. This
 is known as in-flight annihilation and its differential spectrum is given
 by Eq. [2](#eq:IARate):
 
@@ -92,3 +121,16 @@ from monochromatic and Gaussian PBH mass distributions.
 ![Spectrum comparison](figures/spectrum_comparison.png)
 
 **Figure 2.** The total gamma-ray spectrum per PBH, from a PBH of mass $3\times10^{15}$ grams (blue line) and from a Gaussian distribution of density perturbations leading to a distribution with mean mass $3\times10^{15}$ grams. $\sigma$ refers to the standard deviation of the initial density perturbations.
+
+# Software content
+
+`GammaPBHPlotter` was written in `Python` version 3.9 and is capable of
+running on Windows, Linux, and Mac. The main code uses five modules in
+its routine: `colorama`, `numpy`, `matplotlib`, `tqdm`, and `scipy`.
+Since the software automatically checks and downloads all missing
+modules, this requirement should not be a concern for the user. We
+provide the software in that include the code and a relevant manual.
+
+We acknowledge the use of `BlackHawk`. This material is based upon work
+supported by the U.S. Department of Energy, Office of Science, Office of
+High Energy Physics, under Award No. DE-SC0022352.
