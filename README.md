@@ -5,7 +5,7 @@ By John Carlini (jcarlini@oakland.edu) and Ilias Cholis (cholis@oakland.edu)
 INTRODUCTION
 -----------------------------------
 The most recent version of this program can be obtained from:\
-linktowebsite.placeholder\
+linktowebsite.placeholder
 
 This Python-coded software is designed to simulate, display, and record the Hawking gamma-ray differential spectra per unit time (d^2 Nγ/(dEγ dt)) of black holes in units of inverse megaelectron volts per second. The mass range of simulated black holes is between 5×10^13 and 1×10^19 grams. It does this through a combination of interpolating direct Hawking radiation (DHR) spectral data from the existing software BlackHawk, as well as computations of the final state radiation (FSR) from electrons and positrons, and the energy produced by the annihilation of said positrons with electrons in the interstellar medium, referred to as inflight annihilation (IFA).
 
@@ -17,8 +17,8 @@ All other means of distribution are simulated by producing a number of randomly 
 
 What differentiates these distribution methods is what specific probability density function they follow. The Gaussian and non-Gaussian collapse PDFs are based upon a model of PBH formation and early universe structure from the paper "The Formation Probability of Primordial Black Holes" by Matteo Biagetti et al. Due to the specific limitations of that model, it only remains accurate for a limited range of values for the standard deviation (σ). Only values within that range may be simulated by this software.
 
-0.03 < σ < 0.255 for the case of the Gaussian collapse.
-0.04 < σ < 0.16 for the case of non-Gaussian collapse
+0.03 < σ < 0.255 for the case of the Gaussian collapse.\
+0.04 < σ < 0.16 for the case of non-Gaussian collapse.
 
 For the lognormal distribution, it is a simpler and more malleable model which can accommodate values of standard deviations as long as σ > 0. That being said, values of σ=2 or lower are recommended for utility as any higher of a spread would most of the distribution lying outside of our mass range.
 
@@ -34,9 +34,9 @@ SAVING RESULTS
 -----------------------------------
 Once the final graph produced by any simulation has been closed, the program will give the user a y/n prompt of whether they would like to save their results or not. If "y" is entered, an indexed list of the entered peak masses will appear alongside a prompt asking the user which simulations to save. This task is done by entering a single number, a comma separated list of numbers, or simply pressing "0" to save all of them. Once finished, the results will automatically be saved as a .txt file in a destination folder named "results" and a specific subfolder depending on the method used to generate them. If "n" is selected, the user returns to the main menu.
 
-Monochromatic distribution 	=	".../results/monochromatic"
-Gaussian distribution 		=	".../results/gaussian"
-Lognormal distribution 		=	".../results/lognormal"
+Monochromatic distribution 	=	".../results/monochromatic"\
+Gaussian distribution 		=	".../results/gaussian"\
+Lognormal distribution 		=	".../results/lognormal"\
 non-Gaussian collapse		=	".../results/non_gaussian"
 
 Within the appropriate subfolder, the results are saved as another subfolder named after the peak mass used to generate them with three significant figures. For example, a gaussian distribution with peak mass 3.1415e15 grams would be saved under ".../results/gaussian/3.14e+15". Be careful to back up your files when performing multiple simulations of identical or sufficiently close masses via the same method. You may overwrite your previous data. 
@@ -69,9 +69,9 @@ INSTALLATION
 -Install Python version 3.9
 -Download and unzip folder
 -All necessary modules should self-install when running main.py\
-	colorama\
+    colorama\
     numpy\
-  	matplotlib\
+	matplotlib\
 	tqdm\
 	scipy\
 
