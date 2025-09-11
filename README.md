@@ -65,13 +65,12 @@ INSTALLATION
 -----------------------------------
 -Install Python version 3.9
 -Download and unzip folder
--All necessary modules should self-install when running main.py\
-    colorama\
-    numpy\
-	matplotlib\
-	tqdm\
-	scipy\
-
+-All necessary modules should self-install when running `main.py`:
+  - colorama
+  - numpy
+  - matplotlib
+  - tqdm
+  - scipy
 To install and run **GammaPBHPlotter** locally:
 
 ```bash
