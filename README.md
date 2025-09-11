@@ -4,8 +4,8 @@ By John Carlini (jcarlini@oakland.edu) and Ilias Cholis (cholis@oakland.edu)
 
 INTRODUCTION
 -----------------------------------
-The most recent version of this program can be obtained from: 
-linktowebsite.placeholder
+The most recent version of this program can be obtained from:\ 
+linktowebsite.placeholder\
 
 This Python-coded software is designed to simulate, display, and record the Hawking gamma-ray differential spectra per unit time (d^2 Nγ/(dEγ dt)) of black holes in units of inverse megaelectron volts per second. The mass range of simulated black holes is between 5×10^13 and 1×10^19 grams. It does this through a combination of interpolating direct Hawking radiation (DHR) spectral data from the existing software BlackHawk, as well as computations of the final state radiation (FSR) from electrons and positrons, and the energy produced by the annihilation of said positrons with electrons in the interstellar medium, referred to as inflight annihilation (IFA).
 
