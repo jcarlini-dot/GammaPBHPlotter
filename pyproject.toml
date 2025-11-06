@@ -1,0 +1,78 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gammapbh"
+version = "1.1.2"
+description = "GammaPBHPlotter: simulate and visualize Hawking gamma-ray spectra from PBHs"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+  { name = "John Carlini", email = "jcarlini@oakland.edu" },
+  { name = "Ilias Cholis", email = "cholis@oakland.edu" }
+]
+license = { file = "LICENSE" }
+keywords = ["primordial black holes", "hawking radiation", "gamma rays", "astrophysics"]
+
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Physics",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
+]
+
+dependencies = [
+  "numpy>=1.17",
+  "scipy>=1.7",
+  "matplotlib>=3.3",
+  "tqdm>=4.60",
+  "colorama>=0.4"
+]
+
+[project.urls]
+Homepage = "https://github.com/jcarlini-dot/GammaPBHPlotter"
+Repository = "https://github.com/jcarlini-dot/GammaPBHPlotter"
+"Bug Tracker" = "https://github.com/jcarlini-dot/GammaPBHPlotter/issues"
+PyPI = "https://pypi.org/project/gammapbh/"
+
+[project.scripts]
+gammapbh = "gammapbh.cli:main"
+
+[tool.setuptools]
+include-package-data = true
+# If you want to force-include extra license files:
+# license-files = ["LICENSE*", "LICENSE.md"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+gammapbh = [
+  "blackhawk_data/**",
+  "manual/**",
+  "results/**"
+]
+
+[tool.bumpversion]
+current_version = "1.1.2"
+commit = true
+tag = true
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "src/gammapbh/__init__.py"
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "README.md"
+search = "Version {current_version}"
+replace = "Version {new_version}"
+

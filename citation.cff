@@ -1,0 +1,15 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it."
+title: "GammaPBHPlotter: Hawking gamma-ray spectra tools for PBHs"
+version: "1.1.1"
+date-released: "2025-08-25"
+authors:
+  - family-names: "Carlini"
+    given-names: "John"
+    affiliation: "Oakland University"
+    email: "jcarlini@oakland.edu"
+  - family-names: "Cholis"
+    given-names: "Ilias"
+    affiliation: "Oakland University"
+repository-code: "https://github.com/jcarlini-dot/GammaPBHPlotter"
+license: "GPL-3.0-only"
