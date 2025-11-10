@@ -1,4 +1,4 @@
-cff-version: 1.1.0
+cff-version: 1.1.2
 message: "If you use this software, please cite it."
 title: "GammaPBHPlotter: Hawking gamma-ray spectra tools for PBHs"
 version: "1.1.1"
