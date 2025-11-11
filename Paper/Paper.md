@@ -1,4 +1,4 @@
----
+﻿---
 title: "GammaPBHPlotter: A public code for calculating the complete Hawking evaporation gamma-ray spectra from primordial black holes"
 
 authors:

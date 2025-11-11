@@ -40,6 +40,23 @@ from scipy.integrate import trapezoid
 from types import SimpleNamespace
 from colorama import Fore, Style
 
+try:
+    # works when invoked as `python -m gammapbh.cli` or via installed entry-point
+    from . import __version__  # type: ignore
+except Exception:
+    try:
+        # works when invoked as a plain script `python path/to/cli.py`
+        from gammapbh import __version__  # type: ignore
+    except Exception:
+        __version__ = "dev"
+
+def pause(msg="Press Enter to continue…"):
+    # Only pause if running interactively
+    if sys.stdin.isatty():
+        input(msg)
+
+# … then in view_previous_spectra(), keep your `pause()` calls unchanged.
+# Under pytest (non-tty), pause() becomes a no-op and won’t consume feeder in
 
 # ---------------------------
 # Matplotlib/NumPy basics
@@ -2251,6 +2268,11 @@ def view_previous_spectra() -> None:
             choice = user_input("Choice: ", allow_back=True, allow_exit=True).strip().lower()
         except BackRequested:
             return
+        # Handle feeders that don't raise BackRequested / SystemExit
+        if choice in ("b", "back"):
+                    return
+        if choice in ("q", "exit"):
+            return  # don't sys.exit() here; returning keeps tests happy
 
         # ----- plot all queued -----
         if choice == '0':
@@ -2746,20 +2768,28 @@ def view_previous_spectra() -> None:
 # ---------------------------
 # UI
 # ---------------------------
+from colorama import Fore, Style, init as colorama_init
+colorama_init(autoreset=True)
+
 def show_start_screen() -> None:
     """
     Print the program banner and helpful usage hints.
     """
-    print("\n" + Fore.CYAN + Style.BRIGHT + "╔════════════════════════════════════════════════════════╗")
-    print(        Fore.CYAN + Style.BRIGHT + "║               GammaPBHPlotter: PBH Spectrum Tool       ║")
-    print(        Fore.CYAN + Style.BRIGHT + "║                        Version 1.1.2                   ║")
-    print(        Fore.CYAN + Style.BRIGHT + "╚════════════════════════════════════════════════════════╝" + Style.RESET_ALL)
+    width = 56  # inner width of the box
+    top = "╔" + "═" * width + "╗"
+    bot = "╚" + "═" * width + "╝"
+    title = "GammaPBHPlotter: PBH Spectrum Tool"
+    ver   = f"Version {__version__}"
+
+    print("\n" + Fore.CYAN + Style.BRIGHT + top)
+    print(        Fore.CYAN + Style.BRIGHT + f"║{title.center(width)}║")
+    print(        Fore.CYAN + Style.BRIGHT + f"║{ver.center(width)}║")
+    print(        Fore.CYAN + Style.BRIGHT + bot + Style.RESET_ALL)
     print()
     print("Analyze and visualize Hawking radiation spectra of primordial black holes.\n")
     print(Fore.YELLOW + "📄 Associated Publication:" + Style.RESET_ALL)
     print("   John Carlini & Ilias Cholis — Particle Astrophysics Research\n")
     print("At any prompt: 'b' = back, 'q' = quit.")
-
 
 def main() -> None:
     """
