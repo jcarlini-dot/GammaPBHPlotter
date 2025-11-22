@@ -250,7 +250,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <tex-math><![CDATA[3\times10^{15}]]></tex-math>
       <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mn>3</mml:mn><mml:mo>×</mml:mo><mml:msup><mml:mn>10</mml:mn><mml:mn>15</mml:mn></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>
       grams PBH as well as its components.</p></caption>
-      <graphic mimetype="image" mime-subtype="png" xlink:href="Monochromatic.png" />
+      <graphic mimetype="image" mime-subtype="png" xlink:href="monochromatic.png" />
     </fig>
   </sec>
   <sec id="pbh-mass-distribution">
@@ -290,7 +290,22 @@ a Creative Commons Attribution 4.0 International License (CC BY
       refers to the standard deviation of initial density perturbations
       (<xref alt="Biagetti et al., 2021" rid="ref-BiagettiU003A2021eep" ref-type="bibr">Biagetti
       et al., 2021</xref>).</p></caption>
-      <graphic mimetype="image" mime-subtype="png" xlink:href="Spectrum%20comparison.png" />
+      <p><named-content content-type="image">The total gamma-ray
+      spectrum per PBH, from a PBH of mass
+      <inline-formula><alternatives>
+      <tex-math><![CDATA[3 \times 10^{15}]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mn>3</mml:mn><mml:mo>×</mml:mo><mml:msup><mml:mn>10</mml:mn><mml:mn>15</mml:mn></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>
+      grams (blue line) and from a Gaussian distribution of density
+      perturbations leading to a distribution of a mean mass of
+      <inline-formula><alternatives>
+      <tex-math><![CDATA[3 \times 10^{15}]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mn>3</mml:mn><mml:mo>×</mml:mo><mml:msup><mml:mn>10</mml:mn><mml:mn>15</mml:mn></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>
+      grams. <inline-formula><alternatives>
+      <tex-math><![CDATA[\sigma]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>σ</mml:mi></mml:math></alternatives></inline-formula>
+      refers to the standard deviation of initial density perturbations
+      (<xref alt="Biagetti et al., 2021" rid="ref-BiagettiU003A2021eep" ref-type="bibr">Biagetti
+      et al., 2021</xref>).</named-content></p>
     </fig>
   </sec>
   <sec id="software-content">
