@@ -1,36 +1,18 @@
-﻿---
-title: "GammaPBHPlotter: A public code for calculating the complete Hawking evaporation gamma-ray spectra from primordial black holes"
-
-authors:
-  - name: John Carlini
-    orcid: 0009-0002-2918-0300
-    affiliation: 1
-    equal-contrib: true
-  - name: Ilias Cholis
-    orcid: 0000-0002-3805-6478
-    equal-contrib: true
-    affiliation: 1
-tags:
-  - Python
-  - astronomy
-  - astrophysics
-  - gamma-rays
-  - Hawking radiation
-  - primordial black holes
-  - black holes
-
-affiliations:
-  - name: Department of Physics, Oakland University, Rochester, Michigan, 48309, USA
-    index: 1
-
-date: 2025-11-06
-
-repository: https://github.com/jcarlini-dot/GammaPBHPlotter
-archive_doi: 10.5281/zenodo.17527115   # bare DOI, not a URL
-bibliography: paper.bib
 ---
-
-# Summary
+title: "GammaPBHPlotter: A public code for calculating the complete Hawking evaporation gamma-ray spectra from primordial black holes"
+authors:
+  - name: "John Carlini"
+    orcid: "0009-0002-2918-0300"
+    affiliations: [1]
+  - name: "Ilias Cholis"
+    orcid: "0000-0002-3805-6478"
+    affiliations: [1]
+affiliations:
+  - name: "Department of Physics, Oakland University, Rochester, Michigan, 48309, USA"
+    index: 1
+date: "2025-11-06"
+bibliography: paper.bib
+---# Summary
 
 We present `GammaPBHPlotter`, a public Python package for calculating and plotting the Hawking radiation gamma-ray spectra of primordial black holes in the mass range of $5 \times 10^{14}$ to $10^{18}$ grams. This tool allows users to compute the monochromatic and mass-averaged spectra of black holes over a range of parameters. We include the primary/direct Hawking emission, the secondary emission from the decay and hadronization of unstable particles, the final state radiation, and the in-flight annihilation gamma-ray emission components.
 
