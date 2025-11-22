@@ -1,12 +1,20 @@
 ---
 title: "GammaPBHPlotter: A public code for calculating the complete Hawking evaporation gamma-ray spectra from primordial black holes"
+tags:
+  - Python
+  - astronomy
+  - astrophysics
+  - gamma-rays
+  - Hawking radiation
+  - primordial black holes
+  - black holes
 authors:
   - name: "John Carlini"
     orcid: "0009-0002-2918-0300"
-    affiliations: [1]
+    affiliation: 1
   - name: "Ilias Cholis"
     orcid: "0000-0002-3805-6478"
-    affiliations: [1]
+    affiliation: 1
 affiliations:
   - name: "Department of Physics, Oakland University, Rochester, Michigan, 48309, USA"
     index: 1
