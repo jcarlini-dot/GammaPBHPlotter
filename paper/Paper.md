@@ -1,4 +1,4 @@
----
+﻿---
 title: "GammaPBHPlotter: A public code for calculating the complete Hawking evaporation gamma-ray spectra from primordial black holes"
 
 authors:
@@ -80,14 +80,14 @@ where $\sigma_{ann}$ is the cross section of annihilation for positrons of a giv
 
 In Fig.~\ref{fig:PBHspectral_components}, we give the individual gamma-ray spectral components as well as their sum for a PBH of mass $3\times 10^{15}$ grams.
 
-![The total gamma-ray spectrum of a $3\times10^{15}$ grams PBH as well as its components.](Monochromatic.png){#fig:PBHspectral_components width="60%"}
+![The total gamma-ray spectrum of a $3\times10^{15}$ grams PBH as well as its components.](monochromatic.png){#fig:PBHspectral_components width="60%"}
 
 ## PBH Mass Distribution
 
 Users can calculate the gamma-ray spectra from four types of PBH mass distributions. Those are, i) a monochromatic distribution with a mass to be set in the range of $5\times 10^{13}$ to $1\times 10^{19}$ grams, ii) a Gaussian distribution of PBH masses originating from a Gaussian distribution of density perturbations [@Biagetti:2021eep], iii) a more realistic non-Gaussian PBH mass distribution from [@Biagetti:2021eep] and iv) a log-normal distribution of PBH masses. 
 In Fig.~\ref{fig:PBHmass_distr_spectra}, we give the gamma-ray spectra from monochromatic and Gaussian PBH mass-distributions.
 
-![The total gamma-ray spectrum per PBH, from a PBH of mass $3 \times 10^{15}$ grams (blue line) and from a Gaussian distribution of density perturbations leading to a distribution of a mean mass of $3 \times 10^{15}$ grams. $\sigma$ refers to the standard deviation of initial density perturbations [@Biagetti:2021eep].](Spectrum%20comparison.png){#fig:PBHmass_distr_spectra width="60%"}
+![The total gamma-ray spectrum per PBH, from a PBH of mass $3 \times 10^{15}$ grams (blue line) and from a Gaussian distribution of density perturbations leading to a distribution of a mean mass of $3 \times 10^{15}$ grams. $\sigma$ refers to the standard deviation of initial density perturbations [@Biagetti:2021eep].](spectrum_comparison.png){#fig:PBHmass_distr_spectra width="60%"}
 
 ## Software content
 
@@ -97,3 +97,4 @@ We acknowledge the use of `BlackHawk` [@Arbey:2021mbl]. This material is based u
 Office of High Energy Physics, under Award No. DE-SC0022352.
 
 ## References
+
