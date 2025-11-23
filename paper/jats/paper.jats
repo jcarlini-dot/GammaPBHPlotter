@@ -23,7 +23,7 @@ complete Hawking evaporation gamma-ray spectra from primordial black
 holes</article-title>
 </title-group>
 <contrib-group>
-<contrib contrib-type="author" equal-contrib="yes">
+<contrib contrib-type="author">
 <contrib-id contrib-id-type="orcid">https://orcid.org/0009-0002-2918-0300</contrib-id>
 <name>
 <surname>Carlini</surname>
@@ -31,7 +31,7 @@ holes</article-title>
 </name>
 <xref ref-type="aff" rid="aff-1"/>
 </contrib>
-<contrib contrib-type="author" equal-contrib="yes">
+<contrib contrib-type="author">
 <contrib-id contrib-id-type="orcid">https://orcid.org/0000-0002-3805-6478</contrib-id>
 <name>
 <surname>Cholis</surname>
@@ -290,22 +290,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
       refers to the standard deviation of initial density perturbations
       (<xref alt="Biagetti et al., 2021" rid="ref-BiagettiU003A2021eep" ref-type="bibr">Biagetti
       et al., 2021</xref>).</p></caption>
-      <p><named-content content-type="image">The total gamma-ray
-      spectrum per PBH, from a PBH of mass
-      <inline-formula><alternatives>
-      <tex-math><![CDATA[3 \times 10^{15}]]></tex-math>
-      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mn>3</mml:mn><mml:mo>×</mml:mo><mml:msup><mml:mn>10</mml:mn><mml:mn>15</mml:mn></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>
-      grams (blue line) and from a Gaussian distribution of density
-      perturbations leading to a distribution of a mean mass of
-      <inline-formula><alternatives>
-      <tex-math><![CDATA[3 \times 10^{15}]]></tex-math>
-      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mn>3</mml:mn><mml:mo>×</mml:mo><mml:msup><mml:mn>10</mml:mn><mml:mn>15</mml:mn></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>
-      grams. <inline-formula><alternatives>
-      <tex-math><![CDATA[\sigma]]></tex-math>
-      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>σ</mml:mi></mml:math></alternatives></inline-formula>
-      refers to the standard deviation of initial density perturbations
-      (<xref alt="Biagetti et al., 2021" rid="ref-BiagettiU003A2021eep" ref-type="bibr">Biagetti
-      et al., 2021</xref>).</named-content></p>
+      <graphic mimetype="image" mime-subtype="png" xlink:href="spectrum_comparison.png" />
     </fig>
   </sec>
   <sec id="software-content">

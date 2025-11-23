@@ -19,8 +19,10 @@ affiliations:
   - name: "Department of Physics, Oakland University, Rochester, Michigan, 48309, USA"
     index: 1
 date: "2025-11-06"
-bibliography: paper.bib
----# Summary
+bibliography:
+  - paper.bib
+---
+# Summary
 
 We present `GammaPBHPlotter`, a public Python package for calculating and plotting the Hawking radiation gamma-ray spectra of primordial black holes in the mass range of $5 \times 10^{14}$ to $10^{18}$ grams. This tool allows users to compute the monochromatic and mass-averaged spectra of black holes over a range of parameters. We include the primary/direct Hawking emission, the secondary emission from the decay and hadronization of unstable particles, the final state radiation, and the in-flight annihilation gamma-ray emission components.
 
