@@ -1,14 +1,14 @@
-\# Contributing to GammaPBHPlotter
+## Contributing to GammaPBHPlotter
 
 
 
 Thanks for considering a contribution! This document explains how to:
 
-\- contribute code or docs,
+- contribute code or docs,
 
-\- report bugs and request features,
+- report bugs and request features,
 
-\- run tests locally.
+- run tests locally.
 
 
 
@@ -16,51 +16,51 @@ Thanks for considering a contribution! This document explains how to:
 
 
 
-\## Code of Conduct
+## Code of Conduct
 
 This project follows the Contributor Covenant. See `CODE\_OF\_CONDUCT.md`.
 
 
 
-\## How to Get Help / Ask Questions
+## How to Get Help / Ask Questions
 
-\- Usage questions: open a \*\*GitHub Discussion\*\* (if enabled) or a \*\*question\*\*-labeled issue.
+- Usage questions: open a \*\*GitHub Discussion\*\* (if enabled) or a \*\*question\*\*-labeled issue.
 
-\- Bug reports: open a \*\*Bug report\*\* issue (template provided).
+- Bug reports: open a \*\*Bug report\*\* issue (template provided).
 
-\- Security issues: email the maintainers (see `SECURITY.md` if present) rather than filing a public issue.
+- Security issues: email the maintainers (see `SECURITY.md` if present) rather than filing a public issue.
 
 
 
-\## Reporting Bugs
+## Reporting Bugs
 
 Please include:
 
-\- steps to reproduce,
+- steps to reproduce,
 
-\- expected vs. actual behavior,
+- expected vs. actual behavior,
 
-\- your OS/Python versions,
+- your OS/Python versions,
 
-\- `pip show gammapbh`, and
+- `pip show gammapbh`, and
 
-\- minimal data / command sequence (when possible).
+- minimal data / command sequence (when possible).
 
 
 
-\## Requesting Features
+## Requesting Features
 
 Open a \*\*Feature request\*\* issue and explain:
 
-\- the problem you’re trying to solve,
+- the problem you’re trying to solve,
 
-\- proposed changes, and
+- proposed changes, and
 
-\- any alternatives you considered.
+- any alternatives you considered.
 
 
 
-\## Development Setup
+## Development Setup
 
 ```bash
 
@@ -73,6 +73,5 @@ python -m venv .venv \&\& . .venv/Scripts/activate  # Windows PowerShell
 pip install -e .
 
 pip install pytest
-
 
 

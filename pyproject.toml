@@ -75,3 +75,10 @@ replace = '__version__ = "{new_version}"'
 filename = "README.md"
 search = "Version {current_version}"
 replace = "Version {new_version}"
+
+[project.optional-dependencies]
+docs = [
+  "sphinx>=7.2",
+  "furo",
+  "sphinx-autodoc-typehints",
+]

@@ -218,39 +218,90 @@ def err(msg: str) -> None:
     print(Fore.RED + "✖ " + msg + Style.RESET_ALL)
 
 
-def user_input(prompt: str, *, allow_back: bool = False, allow_exit: bool = True) -> str:
+def user_input(
+    prompt: str,
+    *,
+    allow_back: bool = False,
+    allow_exit: bool = True,
+    allow_comment: bool = True,
+) -> str:
     """
-    Wrapper for `input()` that also understands navigation commands.
+    Wrapper around :func:`input` that also understands navigation and, optionally,
+    ignores comment-style lines.
 
     Parameters
     ----------
     prompt : str
-        Text to display for input.
+        Text to display when requesting input from the user.
+
     allow_back : bool, optional
-        If True, entering 'b' or 'back' raises BackRequested.
+        If True, the special commands ``"b"`` or ``"back"`` (case-insensitive)
+        will *not* be returned as normal input. Instead, a :class:`BackRequested`
+        exception is raised, allowing the caller to return to a previous menu.
+
     allow_exit : bool, optional
-        If True, entering 'q' or 'exit' terminates the program.
+        If True, the special commands ``"q"`` or ``"exit"`` (case-insensitive)
+        cause the program to terminate immediately via :func:`sys.exit`. This is
+        used for global “quit” shortcuts in the interactive CLI.
+
+    allow_comment : bool, optional
+        If True (default), any line whose first non-whitespace character is
+        ``'#'`` is treated as a comment and ignored. This is specifically to make
+        copy–pasted transcripts from the documentation or README work smoothly:
+        users can paste sequences like::
+
+            gammapbh
+            # Example A — Monochromatic spectra
+            # 1) Select "Monochromatic spectra"
+            1
+            # 2) Enter PBH masses (g)
+            3.14e15, 1.4e14
+
+        and all ``'# …'`` lines will be skipped until a non-comment line is read.
 
     Returns
     -------
     str
-        The raw input provided by the user, stripped of whitespace.
+        The raw user input (with leading/trailing whitespace stripped) that is
+        *not* a navigation/exit command and is not suppressed as a comment.
 
     Raises
     ------
     BackRequested
-        If the user requests to go back and `allow_back=True`.
+        If the user enters ``"b"`` or ``"back"`` and ``allow_back`` is True.
+
     SystemExit
-        If the user requests to exit and `allow_exit=True`.
+        If the user enters ``"q"`` or ``"exit"`` and ``allow_exit`` is True.
+        This is the normal way to terminate the top-level CLI loop.
+
+    Notes
+    -----
+    - All comparisons for navigation/exit/comment detection are done on the
+      raw line **before** it is returned to the caller.
+    - The function loops until it encounters a line that is not treated as a
+      comment or navigation/exit command, so callers always receive a
+      meaningful payload string.
     """
-    txt = input(prompt).strip()
-    low = txt.lower()
-    if allow_exit and low in ('exit', 'q'):
-        print("Exiting software.")
-        sys.exit(0)
-    if allow_back and low in ('b', 'back'):
-        raise BackRequested()
-    return txt
+    while True:
+        txt = input(prompt)
+
+        # Treat comment-only lines as no-ops so that README examples with '#'
+        # can be copy–pasted directly into an interactive session.
+        if allow_comment and txt.lstrip().startswith("#"):
+            continue
+
+        txt = txt.strip()
+        low = txt.lower()
+
+        if allow_exit and low in ("exit", "q"):
+            print("Exiting software.")
+            sys.exit(0)
+
+        if allow_back and low in ("b", "back"):
+            raise BackRequested()
+
+        return txt
+
 
 
 def list_saved_runs(base_dir: str) -> list[str]:

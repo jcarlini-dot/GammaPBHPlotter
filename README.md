@@ -1,13 +1,13 @@
-﻿# GammaPBHPlotter Version 1.1.3 (11 November 2025)
+﻿﻿# GammaPBHPlotter Version 1.1.4 (22 November 2025)
 -----------------------------------
 By John Carlini (jcarlini@oakland.edu) and Ilias Cholis (cholis@oakland.edu)
 
 INTRODUCTION
 -----------------------------------
-The most recent version of this program can be obtained from: 
-https://test.pypi.org/project/gammapbh
-https://zenodo.org/records/16944093
-https://pypi.org/project/gammapbh/
+The most recent version of this program can be obtained from: <br>
+https://test.pypi.org/project/gammapbh <br>
+https://zenodo.org/records/16944093 <br>
+https://pypi.org/project/gammapbh/ <br>
 
 This Python package is designed to simulate, display, and record the Hawking gamma-ray differential spectra per unit time (d^2 Nγ/(dEγ dt)) of primordial black holes (PBHs) in units of inverse megaelectron volts per second. The mass range of simulated PBHs is between 5×10^13 and 1×10^19 grams. It does this through a combination of interpolating direct Hawking radiation (DHR) spectral data from the existing software BlackHawk, as well as computations of the final state radiation (FSR) from electrons and positrons, and the energy produced by the annihilation of said positrons with electrons in the interstellar medium, referred to as inflight annihilation (IFA).
 
@@ -21,7 +21,7 @@ All other means of distribution are simulated by producing a number of randomly 
 
 What differentiates these distribution methods is what specific probability density function they follow. The Gaussian and non-Gaussian collapse PDFs are based upon a model of PBH formation and early universe structure from the paper "The Formation Probability of Primordial Black Holes" by Matteo Biagetti et al. Due to the specific limitations of that model, it only remains accurate for a limited range of values for the standard deviation (σ). Only values within that range may be simulated by this software.
 
-0.03 < σ < 0.255 for the case of the Gaussian collapse.
+0.03 < σ < 0.255 for the case of the Gaussian collapse. <br>
 0.04 < σ < 0.16 for the case of non-Gaussian collapse
 
 For the lognormal distribution, it is a simpler and more malleable model which can accommodate values of standard deviations as long as σ > 0. That being said, values of σ=2 or lower are recommended for utility as any higher of a spread would most of the distribution lying outside of our mass range.
@@ -40,11 +40,11 @@ SAVING RESULTS
 -----------------------------------
 Once the final graph produced by any simulation has been closed, the program will give the user a y/n prompt of whether they would like to save their results or not. If "y" is entered, an indexed list of the entered peak masses will appear alongside a prompt asking the user which simulations to save. This task is done by entering a single number, a comma separated list of numbers, or simply pressing "0" to save all of them. Once finished, the results will automatically be saved as a .txt file in a destination folder named "results" and a specific subfolder depending on the method used to generate them. If "n" is selected, the user returns to the main menu.
 
-Monochromatic distribution 	=	".../results/monochromatic"
-Gaussian distribution 		=	".../results/gaussian"
-Lognormal distribution 		=	".../results/lognormal"
-non-Gaussian collapse		=	".../results/non_gaussian"
-custom distribution		=	"...results/custom_equation"
+Monochromatic distribution 	=	".../results/monochromatic" <br>
+Gaussian distribution 		=	".../results/gaussian" <br>
+Lognormal distribution 		=	".../results/lognormal" <br>
+non-Gaussian collapse		=	".../results/non_gaussian" <br>
+custom distribution		=	"...results/custom_equation" <br>
 
 Within the appropriate subfolder, the results are saved as another subfolder named after the peak mass used to generate them with three significant figures. For example, a gaussian distribution with peak mass 3.1415e15 grams would be saved under ".../results/gaussian/3.14e+15". Be careful to back up your files when performing multiple simulations of identical or sufficiently close masses via the same method. You may overwrite your previous data. 
 
@@ -56,42 +56,50 @@ If it is desired to compare spectra from different PBH mass distributions, the "
 
 
 REQUIREMENTS  
------------------------------------  
+----------------------------------- 
+All that is needed to run GammaPBHPlotter is the following:
 - Python 3.9 or newer  
 - Internet connection (for first-time installation of dependencies)  
 
-The following modules will be automatically installed by pip if not already present:  
-	colorama  
-	numpy  
-	matplotlib  
-	tqdm  
-	scipy  
+These modules will be automatically installed by pip if not already present:
+- colorama
+- numpy  
+- matplotlib 
+- tqdm  
+- scipy 
 
 INSTALLATION STEPS  
 -----------------------------------  
 
 Option A — Recommended (via pip):  
+```text
 	pip install gammapbh  
-
-You can then run the program directly from your terminal with:  
+```
+You can then run the program directly from your terminal with:
+```text
 	gammapbh  
-
-or equivalently:  
+```
+or equivalently:
+```text
 	python -m gammapbh  
-
-Option B — Manual build (from source):  
+```
+Option B — Manual build (from source):
+```text
 	git clone https://github.com/jcarlini-dot/GammaPBHPlotter 
 	cd GammaPBHPlotter  
 	python -m pip install .  
-
-To verify a successful installation:  
+```
+To verify a successful installation: 
+```text
 	python -c "import gammapbh, importlib.metadata as md; print(gammapbh.__version__, md.version('gammapbh'))"  
+```
+Both commands should print 1.1.4.  
 
-Both commands should print 1.1.3.  
-
-EXAMPLE RUN
+EXAMPLE RUNS
 -----------------------------------
+To test if the package is successfully installed and operational, please copy and paste these blocks of inputs into your device's command prompt
 Example A — Monochromatic spectra
+```text
   #1) Start Package  
 	gammapbh
   #2) Pick to generate monochromatic spectra 
@@ -105,10 +113,10 @@ Example A — Monochromatic spectra
   #Outputs:
     #results/monochromatic/3.14e+15_spectrum.txt
     #results/monochromatic/1.40e+14_spectrum.txt
-  #Columns:
-    #E_gamma(MeV)  Direct  Secondary  Inflight  FinalState  Total
-
+    #Output File Columns: E_gamma(MeV)  Direct  Secondary  Inflight  FinalState  Total
+```
 Example B — Log-normal distributed spectrum
+  ```text
   #1) Start Package  
 	gammapbh
   #2) Pick to generate lognormal spectra
@@ -123,10 +131,12 @@ Example B — Log-normal distributed spectrum
 	y
   #7) Choose to save one spectrum
 	1
-  #Outputs (new run directory):
+  #Outputs:
     #results/lognormal/peak_3.00e+16_σ0.6_N2000/distributed_spectrum.txt   (E_gamma(MeV), TotalSpectrum)
-    #results/lognormal/peak_3.00e+16_σ0.6_N2000/mass_distribution.txt       (N sampled masses in g)  
-
+        #Output File Columns: (E_gamma(MeV), TotalSpectrum)
+    #results/lognormal/peak_3.00e+16_σ0.6_N2000/mass_distribution.txt 
+        #Output File Columns: (N sampled masses in g)
+```
 INCLUDED FILES  
 -----------------------------------  
 
@@ -162,21 +172,27 @@ FILE AND FOLDER DESCRIPTIONS
 	CHANGELOG.md			= Summarized update history for each release.  
 
 
+VERSION HISTORY
+-----------------------------------  
 
-HISTORY
------------------------------------
+- **v1.0.0** – 2025-08-25  
+  - First public release as an executable.
 
-v1.0.0 - 08/25/2025
- 	- First public release as an executable.
-v1.1.0 - 10/28/2025
- 	- Released as a Python Package on PyPi
- 	- Added the ability to enter custom PDF equations.
-v1.1.1 - 10/29/2025
- 	-Fixed issues regarding faulty data upload.
-v1.1.3 - 11/04/2025
-	-Fixed bug involving unenforced mass limitations while viewing prior monochromatic spectra.
-	-Tweaked plot labelling for increased legibility.
-	-Added the ability to view previously generated histograms.
+- **v1.1.0** – 2025-10-28  
+  - Released as a Python package on PyPI.  
+  - Added the ability to enter custom PDF equations.
+
+- **v1.1.1** – 2025-10-29  
+  - Fixed issues related to faulty data upload.
+
+- **v1.1.3** – 2025-11-04  
+  - Fixed bug involving unenforced mass limits while viewing prior monochromatic spectra.  
+  - Tweaked plot labeling for increased legibility.  
+  - Added the ability to view previously generated histograms.
+
+- **v1.1.4** – 2025-11-22  
+  - Reformatted paper and README for compatibility.  
+  - Comment inputs beginning with a pound sign (`#`) are ignored, allowing example runs to be directly copy-pasted into a terminal.
 
 Acknowledgements
 -----------------------------------  

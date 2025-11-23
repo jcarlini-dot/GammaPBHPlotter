@@ -1,12 +1,12 @@
-\# Code of Conduct
+# Code of Conduct
 
 
 
-This project adopts the \[Contributor Covenant Code of Conduct, version 2.1](https://www.contributor-covenant.org/version/2/1/code\_of\_conduct/).
+This project adopts the [Contributor Covenant Code of Conduct, version 2.1](https://www.contributor-covenant.org/version/2/1/code\_of\_conduct/).
 
 
 
-\*\*Enforcement contact:\*\* john.carlini@oakland.edu (or project maintainers listed in `pyproject.toml` / README)
+**Enforcement contact:** john.carlini@oakland.edu (or project maintainers listed in `pyproject.toml` / README)
 
 
 
