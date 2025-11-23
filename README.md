@@ -5,9 +5,9 @@ By John Carlini (jcarlini@oakland.edu) and Ilias Cholis (cholis@oakland.edu)
 INTRODUCTION
 -----------------------------------
 The most recent version of this program can be obtained from: <br>
-https://test.pypi.org/project/gammapbh <br>
-https://zenodo.org/records/16944093 <br>
 https://pypi.org/project/gammapbh/ <br>
+Archival Versions of this program can be obtained from: <br>
+https://zenodo.org/records/16944093 <br>
 
 This Python package is designed to simulate, display, and record the Hawking gamma-ray differential spectra per unit time (d^2 Nγ/(dEγ dt)) of primordial black holes (PBHs) in units of inverse megaelectron volts per second. The mass range of simulated PBHs is between 5×10^13 and 1×10^19 grams. It does this through a combination of interpolating direct Hawking radiation (DHR) spectral data from the existing software BlackHawk, as well as computations of the final state radiation (FSR) from electrons and positrons, and the energy produced by the annihilation of said positrons with electrons in the interstellar medium, referred to as inflight annihilation (IFA).
 
@@ -137,6 +137,141 @@ Example B — Log-normal distributed spectrum
     #results/lognormal/peak_3.00e+16_σ0.6_N2000/mass_distribution.txt 
         #Output File Columns: (N sampled masses in g)
 ```
+
+## Using `gammapbh` as a library (no CLI)
+
+You can import `gammapbh` and directly obtain energies and component spectra arrays for a given PBH mass, or build mass-averaged spectra over a distribution—without going through the interactive CLI.
+
+### Quick start: list available masses and load one mass
+
+```python
+import numpy as np
+from importlib.resources import files
+from gammapbh.cli import (
+    discover_mass_folders,
+    snap_to_available,
+    load_spectra_components,
+)
+
+# 1) Locate packaged data directory
+DATA_ROOT = files("gammapbh") / "blackhawk_data"
+
+# 2) Inspect which masses are available in the package
+masses, dirnames = discover_mass_folders(str(DATA_ROOT))
+masses = np.asarray(masses)   # grams
+print("Available masses (g):", masses)
+
+# 3) Pick a target mass and snap to the closest precomputed grid point
+target_mass = 3.0e15  # grams
+m_snap = snap_to_available(target_mass, masses, tol=0.01)   # 1% tolerance
+idx = int(np.argmin(np.abs(masses - m_snap)))
+mass_dir = DATA_ROOT / dirnames[idx]
+
+# 4) Load the component spectra for that mass
+comp = load_spectra_components(str(mass_dir))
+E  = comp["energy_primary"]              # MeV  (primary grid)
+p  = comp["direct_gamma_primary"]        # per-PBH dN/dE on primary grid
+# Secondary is on a separate grid -> interpolate onto primary:
+sec = np.interp(E, comp["energy_secondary"], comp["direct_gamma_secondary"], left=0.0, right=0.0)
+fsr = comp["FSR_primary"]                # per-PBH dN/dE on primary grid
+ifa = comp["IFA_primary"]                # per-PBH dN/dE on primary grid
+
+total = p + sec + fsr + ifa              # total per-PBH spectrum
+```
+
+> **Units & grids**
+> - Energies are in **MeV**.
+> - Arrays are per-PBH **dN/dE** on their respective grids.
+> - The “secondary” component uses its own energy grid; interpolate it to the primary grid before summing.
+
+#### (Optional) quick plot
+
+```python
+import matplotlib.pyplot as plt
+
+plt.loglog(E, p,  label="Primary")
+plt.loglog(E, sec, label="Secondary")
+plt.loglog(E, fsr, label="FSR")
+plt.loglog(E, ifa, label="IFA")
+plt.loglog(E, total, lw=2, label="Total")
+plt.xlabel("Energy [MeV]")
+plt.ylabel("dN/dE  [per MeV per PBH]")
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+### Mass-averaged spectrum over a distribution
+
+Below is a compact example that computes a **log-normal** mass-averaged spectrum across the packaged mass grid. If you prefer a different PDF, just replace the `weights` definition.
+
+```python
+import numpy as np
+from importlib.resources import files
+from gammapbh.cli import discover_mass_folders, load_spectra_components
+
+DATA_ROOT = files("gammapbh") / "blackhawk_data"
+masses, dirnames = discover_mass_folders(str(DATA_ROOT))
+masses = np.asarray(masses)
+
+# Define log-normal weights over log10(M/g)
+mu_log10M, sigma_log10M = 15.5, 0.4
+log10M = np.log10(masses)
+weights = np.exp(-0.5*((log10M - mu_log10M)/sigma_log10M)**2)
+weights /= weights.sum()
+
+E_ref = None
+total_avg = None
+
+for w, d in zip(weights, dirnames):
+    comp = load_spectra_components(str(DATA_ROOT / d))
+    E  = comp["energy_primary"]
+    p  = comp["direct_gamma_primary"]
+    sec = np.interp(E, comp["energy_secondary"], comp["direct_gamma_secondary"], left=0.0, right=0.0)
+    fsr = comp["FSR_primary"]
+    ifa = comp["IFA_primary"]
+    tot = p + sec + fsr + ifa
+
+    if E_ref is None:
+        E_ref = E
+        total_avg = np.zeros_like(tot)
+
+    # If any primary grids differ by mass, resample to E_ref
+    if not np.array_equal(E, E_ref):
+        tot = np.interp(E_ref, E, tot, left=0.0, right=0.0)
+
+    total_avg += w * tot
+
+# (E_ref, total_avg) is your distribution-averaged spectrum
+```
+
+---
+
+### Minimal function reference (importable today)
+
+- `discover_mass_folders(data_dir) -> (masses, dirnames)`  
+  Return the available precomputed mass grid (grams) and the corresponding folder names inside `blackhawk_data/`.
+
+- `snap_to_available(target_mass_g, masses, tol=0.01)`  
+  Return the closest mass in the packaged grid, optionally enforcing a fractional tolerance.
+
+- `load_spectra_components(mass_dir) -> dict`  
+  Load component spectra for a given mass directory. Keys include:
+  - `"energy_primary"`, `"direct_gamma_primary"`
+  - `"energy_secondary"`, `"direct_gamma_secondary"` (interpolate to primary)
+  - `"FSR_primary"`, `"IFA_primary"`
+
+---
+
+### Notes & tips
+
+- All examples above bypass the CLI; they’re suitable for use in scripts, notebooks, or other packages.
+- If you’re working outside the installed package (e.g., cloning the repo), you can replace `files("gammapbh") / "blackhawk_data"` with the absolute path to your local `blackhawk_data` directory.
+- For reproducibility, please cite the packaged data (BlackHawk outputs and the precomputed FSR/IFA libraries) as described in the paper and `CITATION.cff`.
+
+
 INCLUDED FILES  
 -----------------------------------  
 
