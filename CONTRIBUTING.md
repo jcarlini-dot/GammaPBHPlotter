@@ -1,4 +1,4 @@
-\# Contributing to GammaPBHPlotter
+## Contributing to GammaPBHPlotter
 
 
 
@@ -22,7 +22,7 @@ This project follows the Contributor Covenant. See `CODE\_OF\_CONDUCT.md`.
 
 
 
-\## How to Get Help / Ask Questions
+## How to Get Help / Ask Questions
 
 \- Usage questions: open a \*\*GitHub Discussion\*\* (if enabled) or a \*\*question\*\*-labeled issue.
 
@@ -32,7 +32,7 @@ This project follows the Contributor Covenant. See `CODE\_OF\_CONDUCT.md`.
 
 
 
-\## Reporting Bugs
+## Reporting Bugs
 
 Please include:
 
@@ -48,7 +48,7 @@ Please include:
 
 
 
-\## Requesting Features
+## Requesting Features
 
 Open a \*\*Feature request\*\* issue and explain:
 
@@ -60,7 +60,7 @@ Open a \*\*Feature request\*\* issue and explain:
 
 
 
-\## Development Setup
+## Development Setup
 
 ```bash
 
