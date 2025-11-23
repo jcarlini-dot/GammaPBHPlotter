@@ -1,4 +1,4 @@
-﻿# GammaPBHPlotter Version 1.1.3 (11 November 2025)
+﻿# GammaPBHPlotter Version 1.1.4 (22 November 2025)
 -----------------------------------
 By John Carlini (jcarlini@oakland.edu) and Ilias Cholis (cholis@oakland.edu)
 
