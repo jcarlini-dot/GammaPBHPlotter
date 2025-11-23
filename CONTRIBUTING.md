@@ -16,7 +16,7 @@ Thanks for considering a contribution! This document explains how to:
 
 
 
-\## Code of Conduct
+## Code of Conduct
 
 This project follows the Contributor Covenant. See `CODE\_OF\_CONDUCT.md`.
 
