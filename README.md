@@ -1,4 +1,4 @@
-﻿﻿# GammaPBHPlotter Version 1.1.4 (22 November 2025)
+﻿# GammaPBHPlotter Version 1.1.4 (22 November 2025)
 -----------------------------------
 By John Carlini (jcarlini@oakland.edu) and Ilias Cholis (cholis@oakland.edu)
 
@@ -32,7 +32,7 @@ Running these simulations will take additional time proportional to the sample s
 
 RUNNING SIMULATIONS
 -----------------------------------
-No matter which of the distribution methods is needed, the act of simulating them is a similar process for users. Upon selecting their desired method, the program will send a text prompt to input the mass values most likely to appear in the distribution (referred to as your peak masses). Peak masses can be entered individually or as a series of comma separated numbers in scientific notation. I.e. 1e15, 2.5e16, 3.75e17, etc. Since masses can only be generated within the limits of 5e13 and 5e18 g, placing a peak mass too close to said limits while using a non-monochromatic distribution method can cause a significant number of the black holes to fall outside the range, have their spectra treated as 0, and cause the overall data to lose accuracy. This is less of an issue when the peak mass is near the higher end of masses (5e18 g) as masses above that value have such low values of Hawking radiation that counting them as 0 is an imperceptible difference in almost all use cases. Additionally, outside of a monochromatic distribution, the peak mass does not always coincide with the average mass. For this reason, the mean mass of simulated black holes is provided as well in graphs as well as in saved results.
+No matter which of the distribution methods is needed, the act of simulating them is a similar process for users. Upon selecting their desired method, the program will send a text prompt to input the mass values most likely to appear in the distribution (referred to as your peak masses). Peak masses can be entered individually or as a series of comma separated numbers in scientific notation. I.e. 1e15, 2.5e16, 3.75e17, etc. Since masses can only be generated within the limits of 5×10^13 and 1×10^19 g, placing a peak mass too close to said limits while using a non-monochromatic distribution method can cause a significant number of the black holes to fall outside the range, have their spectra treated as 0, and cause the overall data to lose accuracy. This is less of an issue when the peak mass is near the higher end of masses (5e18 g) as masses above that value have such low values of Hawking radiation that counting them as 0 is an imperceptible difference in almost all use cases. Additionally, outside of a monochromatic distribution, the peak mass does not always coincide with the average mass. For this reason, the mean mass of simulated black holes is provided as well in graphs as well as in saved results.
 
 If a peak mass is entered individually, two graphs will appear. One will show the number of gamma-ray photons emitted per unit energy and unit time (or dNγ/dEγ) in units of Inverse Megaelectron Volts and inverse seconds on the y-axis and Energy (E) in units of Megaelectron volts. The next graph is opened by closing the previous one and displays that same data in units of Megaelectron Volts per second. That is done by multiplying the y axis (dNγ/dEγ) of each data point by the x axis squared (E²). The first graph provides data in a form more useful for the simulation of Hawking radiation, while the second provides data in the form of the luminosity in Megaelectron Volts per second. If multiple masses are entered, the resulting spectra are presented in separate graphs. Each graph will appear once the previous one is closed in the order they were entered. Once through, all spectra as well as their cumulative sum will be presented in one final graph in units of MeV s^-1.
 
@@ -75,13 +75,13 @@ Option A — Recommended (via pip):
 ```text
 	pip install gammapbh  
 ```
-You can then run the program directly from your terminal with:
+You can then run the text user-interface directly from your terminal with:
 ```text
-	gammapbh  
+	gammapbh-tui  
 ```
 or equivalently:
 ```text
-	python -m gammapbh  
+	python -m gammapbh-tui  
 ```
 Option B — Manual build (from source):
 ```text
@@ -91,16 +91,15 @@ Option B — Manual build (from source):
 ```
 To verify a successful installation: 
 ```text
-	python -c "import gammapbh, importlib.metadata as md; print(gammapbh.__version__, md.version('gammapbh'))"  
+	python -c "import gammapbh, importlib.metadata as md; print(gammapbh.__version__, md.version('gammapbh'))"
 ```
-Both commands should print 1.1.4.  
 
-EXAMPLE RUNS
+TUI EXAMPLE RUNS
 -----------------------------------
 To test if the package is successfully installed and operational, please copy and paste these blocks of inputs into your device's command prompt
 Example A — Monochromatic spectra
 ```text
-  #1) Start Package  
+  #1) Start Package TUI 
 	gammapbh
   #2) Pick to generate monochromatic spectra 
 	1  
@@ -137,6 +136,328 @@ Example B — Log-normal distributed spectrum
     #results/lognormal/peak_3.00e+16_σ0.6_N2000/mass_distribution.txt 
         #Output File Columns: (N sampled masses in g)
 ```
+## Quick Start (CLI & API)
+If a user wishes to not use GammaPBHplotter via the interactive TUI, then other options include:
+- a **non-interactive CLI** (great for scripts/automation), and  
+- the **Python API** (for notebooks or custom pipelines).  
+
+All examples assume **v1.1.4** is installed and on your `PATH`.
+
+> **Units:** energy `E` is in **MeV**. Differential spectra use **MeV⁻¹ s⁻¹**; the SED-style view uses **MeV s⁻¹** via \(E^2\,\mathrm{d}N/\mathrm{d}E\).
+
+### Command-line (non-interactive)
+
+```bash
+# Show help and available options
+python -m gammapbh --help
+
+# List the available PBH mass grid entries bundled with the package
+python -m gammapbh --list-masses
+
+# Write a CSV of energy + all components (aligned to the "secondary" grid)
+python -m gammapbh --mass 5e13 --align secondary --csv --save out.csv
+
+# Save a plot of the total spectrum (no GUI window)
+python -m gammapbh --mass 5e13 --align secondary --plot --save out.png --no-show
+```
+
+**Notes**
+- `--align` controls the common energy grid:
+  - `secondary` *(default)*, `primary`, `union` (all unique points), or `intersection` (only overlapping points).
+- `--csv` writes **E** plus each component column (e.g., `direct_gamma_*`, `IFA_*`, `FSR_*`, `total_*`, and `total` if present).
+- `--plot` plots the **total** spectrum on the chosen grid; combine with `--save` and `--no-show` for headless runs.
+
+### Python API
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import gammapbh as gp
+
+# Discover the bundled mass grid and pick one mass
+masses = gp.discover_mass_folders()
+# masses can be a tuple (numbers, names) or a flat list; pick the first numeric value robustly:
+if isinstance(masses, tuple) and len(masses) == 2 and masses[0]:
+    mass = float(masses[0][0]) if isinstance(masses[0][0], (int, float)) else float(masses[1][0])
+elif isinstance(masses, list) and masses:
+    mass = float(masses[0]) if isinstance(masses[0], (int, float)) else float(masses[0])
+else:
+    raise RuntimeError("No masses found in the bundled grid.")
+
+# Load spectra aligned to the 'secondary' grid (default). Returns energy array E and a dict of components.
+E, comps = gp.load_spectra_components(mass, align="secondary")  # also: "primary", "union", "intersection"
+
+# Access the total spectrum (if not directly provided, sum primary+secondary totals)
+total = comps.get("total")
+if total is None:
+    tp, ts = comps.get("total_primary"), comps.get("total_secondary")
+    if tp is not None and ts is not None:
+        total = np.asarray(tp) + np.asarray(ts)
+    else:
+        raise RuntimeError("No total spectrum available in components.")
+
+# Quick plot (log–log)
+plt.figure()
+plt.loglog(E, total, label=f"total, M={mass:.3e} g (secondary grid)")
+plt.xlabel("E [MeV]")
+plt.ylabel("dN/dE [MeV$^{-1}$ s$^{-1}$]")
+plt.grid(True, which="both", ls=":")
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# (Optional) Write a simple CSV (E + all component columns)
+import csv
+with open("spectrum_out.csv", "w", newline="") as f:
+    w = csv.writer(f)
+    cols = ["E"] + sorted(comps.keys())
+    w.writerow(cols)
+    for i in range(len(E)):
+        w.writerow([E[i]] + [np.asarray(comps[k])[i] for k in cols[1:]])
+```
+
+> **Tip:** For distributed (stochastic) runs done via the TUI, results depend on random sampling size/seed. The CLI/API examples above operate on the bundled per-mass spectra and are deterministic for a given mass and alignment.
+
+
+## Tests
+
+This project uses `pytest` for the test suite, with optional tools for coverage, style, and types. Below are quick-start instructions for running and extending tests on Linux/macOS and Windows PowerShell.
+
+### 1) Set up a virtual environment
+
+**Linux / macOS (bash/zsh)**  
+    python3 -m venv .venv
+    source .venv/bin/activate
+    python -m pip install --upgrade pip
+
+**Windows PowerShell**  
+    py -3 -m venv .venv
+    .\.venv\Scripts\Activate.ps1
+    python -m pip install --upgrade pip
+
+### 2) Install the package and test dependencies
+
+If the project exposes extras (recommended):
+
+**Either**  
+    pip install -e ".[dev]"        # includes test/linters/types/etc.  
+**Or**  
+    pip install -e ".[test]"       # just test deps
+
+If you prefer explicit files:
+
+    pip install -e .
+    pip install -r requirements-dev.txt
+
+> Tip: If you use `matplotlib` in tests, the suite sets a non-interactive backend (Agg). You can also export `MPLBACKEND=Agg` (bash) or `$env:MPLBACKEND='Agg'` (PowerShell) before running tests.
+
+### 3) Run the full test suite
+
+    pytest -q
+
+To see verbose output:
+
+    pytest -vv
+
+To stop on first failure:
+
+    pytest -x
+
+### 4) Run subsets (markers / paths)
+
+Run only unit tests in a directory:
+
+    pytest -q tests/unit
+
+Run only tests marked as “fast” (see markers below):
+
+    pytest -m fast -q
+
+Exclude slow tests:
+
+    pytest -m "not slow" -q
+
+Run a single test file or a single test:
+
+    pytest tests/test_spectra.py -q
+    pytest tests/test_spectra.py::test_primary_component_shapes -q
+
+### 5) Coverage
+
+Terminal coverage with missing lines:
+
+    pytest --cov=gammapbh --cov-report=term-missing
+
+Create an HTML report at `htmlcov/index.html`:
+
+    pytest --cov=gammapbh --cov-report=term-missing --cov-report=html
+
+Open the HTML report in your browser.
+
+### 6) Style and type checks (optional but recommended)
+
+If configured:
+
+    ruff check .
+    black --check .
+    mypy src/ tests/
+
+You can auto-fix style issues:
+
+    ruff check . --fix
+    black .
+
+### 7) CLI smoke tests
+
+Ensure the CLI responds and help prints without error:
+
+    python -m gammapbh.cli --help
+    gammapbh --help
+
+Run a specific CLI path:
+
+    pytest tests/test_cli.py -q
+
+> For CLI snapshot tests, prefer comparing normalized text or small JSON outputs to avoid flakiness.
+
+### 8) Plot/image tests (optional)
+
+For deterministic plot tests, use `matplotlib`’s Agg backend. If you use image comparison:
+
+- Prefer lightweight assertions on figure metadata (axes count, labels present, line counts) rather than pixel-exact diffs.
+- If using `pytest-mpl`, store baseline images under `tests/baseline/` and run:
+
+      pytest --mpl -q
+
+- Keep numeric seeds fixed (e.g., `rng = np.random.default_rng(0)`) for any stochastic examples.
+
+### 9) Floating-point comparisons
+
+When asserting numerical equality, use tolerances:
+
+    import numpy as np
+    assert np.allclose(got, expected, rtol=1e-10, atol=0.0)
+
+Choose tolerances appropriate to the algorithm and units. Prefer relative (`rtol`) for scale-invariant checks and absolute (`atol`) when values can be near zero.
+
+### 10) Markers and skips
+
+Declare markers in `pytest.ini`:
+
+    [pytest]
+    addopts = -ra
+    testpaths = tests
+    markers =
+        slow: long-running tests (use -m "not slow" to skip)
+        net: tests that require network access
+        cli: command-line interface tests
+        plot: plotting/image tests
+
+Use them in tests:
+
+    import pytest
+
+    @pytest.mark.slow
+    def test_heavy_integration():
+        ...
+
+    @pytest.mark.skipif(not HAVE_DATA, reason="requires local data assets")
+    def test_with_optional_data():
+        ...
+
+### 11) Test layout & naming
+
+Recommended structure:
+
+    tests/
+      unit/
+        test_loaders.py
+        test_mass_functions.py
+        test_interpolation.py
+      cli/
+        test_cli.py
+      plot/
+        test_plots.py
+      data/              # tiny fixtures only; larger assets should be generated or downloaded in CI
+
+Pytest discovers tests matching `test_*.py` or `*_test.py`.
+
+### 12) Writing new tests (examples)
+
+Unit test for a mass PDF normalization:
+
+    import numpy as np
+    from gammapbh import mass_function_lognormal
+
+    def test_lognormal_normalizes_to_one():
+        m = np.logspace(13, 20, 2000)  # grams
+        pdf = mass_function_lognormal(m, mu=1e15, sigma=0.5)
+        # integrate in log-space to reduce bias
+        area = np.trapz(pdf, x=np.log(m))
+        assert np.allclose(area, 1.0, rtol=1e-3)
+
+Interpolation monotonicity:
+
+    from gammapbh import load_spectra_components
+
+    def test_interpolation_monotonic_energy_grid(tmp_path):
+        comp = load_spectra_components(mass_g=3e15, data_root="blackhawk_data")
+        e = comp.energy_mev
+        assert (np.diff(e) > 0).all()
+
+CLI smoke test:
+
+    import subprocess, sys
+
+    def test_cli_help_runs():
+        code = subprocess.call([sys.executable, "-m", "gammapbh.cli", "--help"])
+        assert code == 0
+
+### 13) Doctests (optional)
+
+You can validate code examples in the README or docstrings:
+
+    pytest --doctest-glob="*.md" README.md
+    pytest --doctest-modules src/gammapbh
+
+Keep examples fast and deterministic.
+
+### 14) Continuous Integration (GitHub Actions example)
+
+Create `.github/workflows/tests.yml`:
+
+    name: tests
+    on:
+      push:
+      pull_request:
+    jobs:
+      test:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4
+          - uses: actions/setup-python@v5
+            with:
+              python-version: "3.11"
+          - name: Install
+            run: |
+              python -m pip install --upgrade pip
+              pip install -e ".[dev]" || pip install -e . && pip install -r requirements-dev.txt
+          - name: Run tests
+            env:
+              MPLBACKEND: Agg
+            run: |
+              pytest -q --cov=gammapbh --cov-report=term-missing
+
+### 15) Tips for reliable tests
+
+- Avoid network and large file dependencies; use tiny fixtures or generate data on the fly.
+- Seed all randomness.
+- Keep slow tests behind a `@pytest.mark.slow` marker.
+- Assert on invariants (shapes, monotonicity, normalization) in addition to exact numbers.
+- Prefer black-box API tests at the module boundary, and targeted unit tests for numerics.
+
+If anything fails or is unclear, run with `-vv -ra` for more detail and include the command, OS, Python version, and full traceback when filing an issue.
+
 INCLUDED FILES  
 -----------------------------------  
 
@@ -193,6 +514,9 @@ VERSION HISTORY
 - **v1.1.4** – 2025-11-22  
   - Reformatted paper and README for compatibility.  
   - Comment inputs beginning with a pound sign (`#`) are ignored, allowing example runs to be directly copy-pasted into a terminal.
+  - Added Non-interactive CLI (`python -m gammapbh`)
+  - Added Public Python API** (`gammapbh.api`)
+  - Added Test suite (pytest)
 
 Acknowledgements
 -----------------------------------  
