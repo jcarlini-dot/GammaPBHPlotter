@@ -1,4 +1,4 @@
-﻿"""
+"""
 gammapbh — utilities to load BlackHawk tables, compose PBH gamma spectra,
 and compute/plot spectra for various PBH mass distributions.
 
@@ -29,3 +29,5 @@ __all__ = [
     "mass_function_lognormal",
     "__version__",
 ]
+
+__version__ = "1.1.4"
