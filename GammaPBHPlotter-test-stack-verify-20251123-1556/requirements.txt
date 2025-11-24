@@ -1,0 +1,5 @@
+numpy>=1.17
+scipy>=1.7
+matplotlib>=3.3
+tqdm>=4.60
+colorama>=0.4

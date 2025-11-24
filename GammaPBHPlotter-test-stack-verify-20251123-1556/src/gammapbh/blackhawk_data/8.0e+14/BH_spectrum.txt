@@ -1,0 +1,4 @@
+﻿Initial BH comoving number density as a function of their mass and parameter.
+
+      mass/spin    0.00000e+00
+    8.00000e+14    1.00000e+00

@@ -1,0 +1,10 @@
+# Include license and readme in the source distribution
+include LICENSE.md
+include README.md
+
+# Include all BlackHawk data folders and files in the source distribution
+recursive-include src/gammapbh/blackhawk_data *
+
+# include documentation and citation metadata
+include citation.cff
+include CHANGELOG.md

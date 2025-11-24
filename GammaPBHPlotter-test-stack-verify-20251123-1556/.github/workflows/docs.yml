@@ -1,0 +1,27 @@
+name: docs
+on:
+  push:
+    branches: [ main, release/* ]
+  workflow_dispatch:
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -U pip
+      # EITHER use extras:
+      - run: python -m pip install -e .[docs]
+      # OR use a requirements file:
+      # - run: python -m pip install -r docs/requirements.txt && python -m pip install -e .
+      - run: sphinx-build -b html docs/source docs/_build/html
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_build/html
