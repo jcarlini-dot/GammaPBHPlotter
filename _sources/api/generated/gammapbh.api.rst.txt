@@ -1,0 +1,17 @@
+gammapbh.api
+============
+
+.. automodule:: gammapbh.api
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      discover_mass_folders
+      load_spectra_components
+      load_spectra_components_full
+      mass_function
+      mass_function_exact
+      mass_function_lognormal
+   
