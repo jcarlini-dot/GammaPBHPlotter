@@ -251,42 +251,135 @@ Spectral density: dN/dE [MeV^-1 s^-1]</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="gammapbh.discover_mass_folders">
 <span class="sig-prename descclassname"><span class="pre">gammapbh.</span></span><span class="sig-name descname"><span class="pre">discover_mass_folders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gammapbh/api.html#discover_mass_folders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gammapbh.discover_mass_folders" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Discover the available PBH mass grid from the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_dir</strong> (<em>str</em><em> | </em><em>pathlib.Path</em><em> | </em><em>None</em>) – Optional override for the data root. If <code class="docutils literal notranslate"><span class="pre">None</span></code> (default), the
+built-in packaged data path is used.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whatever the underlying helper returns (a list or a <code class="docutils literal notranslate"><span class="pre">(nums,</span> <span class="pre">names)</span></code>
+tuple). Use with <code class="docutils literal notranslate"><span class="pre">_normalize_lists</span></code> if you need parallel lists.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gammapbh.load_spectra_components">
 <span class="sig-prename descclassname"><span class="pre">gammapbh.</span></span><span class="sig-name descname"><span class="pre">load_spectra_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mass</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'secondary'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gammapbh/api.html#load_spectra_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gammapbh.load_spectra_components" title="Link to this definition">¶</a></dt>
-<dd><p>Always return exactly (E, components_dict).
-align: ‘secondary’ (default), ‘primary’, ‘union’, or ‘intersection’</p>
+<dd><p>Load spectra for <code class="docutils literal notranslate"><span class="pre">mass</span></code> and <strong>always</strong> return <code class="docutils literal notranslate"><span class="pre">(E,</span> <span class="pre">components_dict)</span></code>.</p>
+<p>This is the user-friendly, shape-stable loader. It applies the requested
+<code class="docutils literal notranslate"><span class="pre">align</span></code> rule to reconcile primary/secondary grids when necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mass</strong> (<em>float</em><em> | </em><em>str</em>) – Target mass (e.g. <code class="docutils literal notranslate"><span class="pre">3.0e15</span></code>). May be numeric or a folder-style string.</p></li>
+<li><p><strong>data_dir</strong> (<em>str</em><em> | </em><em>pathlib.Path</em><em> | </em><em>None</em>) – Optional override for the data root.</p></li>
+<li><p><strong>align</strong> (<em>{'secondary'</em><em>,</em><em>'primary'</em><em>,</em><em>'union'</em><em>,</em><em>'intersection'}</em><em>, </em><em>default 'secondary'</em>) – Energy alignment rule applied when the underlying data expose separate
+grids.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Energy grid and component arrays aligned to that grid.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(numpy.ndarray, dict[str, numpy.ndarray])</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gammapbh.load_spectra_components_full">
 <span class="sig-prename descclassname"><span class="pre">gammapbh.</span></span><span class="sig-name descname"><span class="pre">load_spectra_components_full</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mass</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gammapbh/api.html#load_spectra_components_full"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gammapbh.load_spectra_components_full" title="Link to this definition">¶</a></dt>
-<dd><p>Return the <em>raw</em> return from the CLI loader (dict, tuple, etc.).</p>
+<dd><p>Load the <em>raw</em> spectral data structure for a given mass.</p>
+<p>This returns the unmodified output of the lower-level loader (dict/tuple),
+which may contain separate primary/secondary energy axes and component
+arrays on their native grids.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mass</strong> (<em>float</em><em> | </em><em>str</em>) – Target mass (e.g. <code class="docutils literal notranslate"><span class="pre">3.0e15</span></code>). May be numeric or a folder-style string.</p></li>
+<li><p><strong>data_dir</strong> (<em>str</em><em> | </em><em>pathlib.Path</em><em> | </em><em>None</em>) – Optional override for the data root.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The underlying loader’s native output (implementation detail).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gammapbh.mass_function">
 <span class="sig-prename descclassname"><span class="pre">gammapbh.</span></span><span class="sig-name descname"><span class="pre">mass_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gammapbh/api.html#mass_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gammapbh.mass_function" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Pass-through to the underlying mass function helper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – Forwarded verbatim to the implementation in <code class="docutils literal notranslate"><span class="pre">.cli</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> – Forwarded verbatim to the implementation in <code class="docutils literal notranslate"><span class="pre">.cli</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whatever the underlying helper returns.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gammapbh.mass_function_exact">
 <span class="sig-prename descclassname"><span class="pre">gammapbh.</span></span><span class="sig-name descname"><span class="pre">mass_function_exact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gammapbh/api.html#mass_function_exact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gammapbh.mass_function_exact" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Pass-through to the exact (discrete) mass function helper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – Forwarded verbatim to the implementation in <code class="docutils literal notranslate"><span class="pre">.cli</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> – Forwarded verbatim to the implementation in <code class="docutils literal notranslate"><span class="pre">.cli</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whatever the underlying helper returns.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gammapbh.mass_function_lognormal">
 <span class="sig-prename descclassname"><span class="pre">gammapbh.</span></span><span class="sig-name descname"><span class="pre">mass_function_lognormal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gammapbh/api.html#mass_function_lognormal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gammapbh.mass_function_lognormal" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Pass-through to the log-normal mass function helper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – Forwarded verbatim to the implementation in <code class="docutils literal notranslate"><span class="pre">.cli</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> – Forwarded verbatim to the implementation in <code class="docutils literal notranslate"><span class="pre">.cli</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whatever the underlying helper returns.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
 
 <p class="rubric">Modules</p>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="gammapbh.api.html#module-gammapbh.api" title="gammapbh.api"><code class="xref py py-obj docutils literal notranslate"><span class="pre">api</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Public, importable API for the <code class="docutils literal notranslate"><span class="pre">gammapbh</span></code> package.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="gammapbh.cli.html#module-gammapbh.cli" title="gammapbh.cli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cli</span></code></a></p></td>
 <td><p>GammaPBHPlotter — interactive CLI to analyze and visualize Hawking-radiation gamma-ray spectra of primordial black holes (PBHs).</p></td>

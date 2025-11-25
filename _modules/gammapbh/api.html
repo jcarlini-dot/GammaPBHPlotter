@@ -232,7 +232,39 @@
         </div>
         <article role="main" id="furo-main-content">
           <h1>Source code for gammapbh.api</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="c1"># api.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Public, importable API for the ``gammapbh`` package.</span>
+
+<span class="sd">This module provides a stable, documented interface for:</span>
+<span class="sd">  * Discovering which PBH masses are available in the bundled dataset.</span>
+<span class="sd">  * Loading spectral components for a selected mass and returning them in a</span>
+<span class="sd">    normalized, consistent shape: ``(E, components_dict)``.</span>
+<span class="sd">  * Accessing mass-distribution helper functions (Gaussian, exact lists,</span>
+<span class="sd">    log-normal, etc.) as simple pass-throughs.</span>
+
+<span class="sd">Design</span>
+<span class="sd">------</span>
+<span class="sd">The actual I/O and composition logic lives in the underlying CLI/library</span>
+<span class="sd">utilities (imported from ``.cli``). This module focuses on a clean, tidy</span>
+<span class="sd">surface for library users:</span>
+
+<span class="sd">* ``discover_mass_folders(data_dir=None)`` returns the available mass grid.</span>
+<span class="sd">* ``load_spectra_components(mass, data_dir=None, align=&#39;secondary&#39;)`` always</span>
+<span class="sd">  returns a 1D energy grid and a dict of aligned component arrays.</span>
+<span class="sd">* Pass-throughs ``mass_function*`` expose mass distribution helpers.</span>
+
+<span class="sd">Units</span>
+<span class="sd">-----</span>
+<span class="sd">Unless otherwise documented by the dataset, the conventional units are:</span>
+
+<span class="sd">* Mass: grams (g)</span>
+<span class="sd">* Energy: MeV</span>
+<span class="sd">* Spectral density: dN/dE [MeV^-1 s^-1]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span>
 
@@ -249,10 +281,46 @@
 <span class="n">_PKG_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
 <span class="n">_DATA_DIR</span> <span class="o">=</span> <span class="n">_PKG_DIR</span> <span class="o">/</span> <span class="s2">&quot;blackhawk_data&quot;</span>
 
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_data_dir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Resolve the base data directory.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_dir : str | pathlib.Path | None</span>
+<span class="sd">        If provided, this path is used. Otherwise, the packaged data directory</span>
+<span class="sd">        is returned.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pathlib.Path</span>
+<span class="sd">        Resolved directory containing mass subfolders.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span> <span class="k">if</span> <span class="n">data_dir</span> <span class="k">else</span> <span class="n">_DATA_DIR</span>
 
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_normalize_lists</span><span class="p">(</span><span class="n">masses_obj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Normalize a discovery result to parallel ``(numbers, names)`` lists.</span>
+
+<span class="sd">    The discovery helper may yield either:</span>
+<span class="sd">      * a 2-tuple ``(nums, names)``, or</span>
+<span class="sd">      * a single list of numbers or strings.</span>
+
+<span class="sd">    This function converts those shapes into a pair of ``List[float]`` (best</span>
+<span class="sd">    effort; non-parsable names become ``nan``) and ``List[str]`` names.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    masses_obj :</span>
+<span class="sd">        Discovery result as returned by the underlying helper.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    (List[float], List[str])</span>
+<span class="sd">        Parallel lists: numeric masses (where possible) and string labels.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Handle (nums, names) or just one list</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">masses_obj</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">masses_obj</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">masses_obj</span>
@@ -277,7 +345,26 @@
             <span class="k">return</span> <span class="n">nums</span><span class="p">,</span> <span class="n">names</span>
     <span class="k">return</span> <span class="p">[],</span> <span class="p">[]</span>
 
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_mass_to_folder_name</span><span class="p">(</span><span class="n">mass</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">masses_obj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a user request (float or string) into a canonical folder name.</span>
+
+<span class="sd">    The function consults the discovered grid to preserve exact names where</span>
+<span class="sd">    available (e.g. ``&quot;3.0e15&quot;``). If not found, it formats the numeric value.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mass : float | str</span>
+<span class="sd">        Requested mass; may be a float or string (e.g. ``&quot;3e15&quot;``).</span>
+<span class="sd">    masses_obj :</span>
+<span class="sd">        Discovery result (tuple or list) used to look up canonical names.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        Canonical folder name for the requested mass.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nums</span><span class="p">,</span> <span class="n">names</span> <span class="o">=</span> <span class="n">_normalize_lists</span><span class="p">(</span><span class="n">masses_obj</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">mass</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
@@ -293,23 +380,57 @@
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">mass</span><span class="p">)</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">)</span>
 
+
 <span class="c1"># ---------- Public API ----------</span>
 
 <div class="viewcode-block" id="discover_mass_folders">
 <a class="viewcode-back" href="../../api/generated/gammapbh.api.html#gammapbh.discover_mass_folders">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">discover_mass_folders</span><span class="p">(</span><span class="n">data_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Discover the available PBH mass grid from the dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_dir : str | pathlib.Path | None</span>
+<span class="sd">        Optional override for the data root. If ``None`` (default), the</span>
+<span class="sd">        built-in packaged data path is used.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    object</span>
+<span class="sd">        Whatever the underlying helper returns (a list or a ``(nums, names)``</span>
+<span class="sd">        tuple). Use with ``_normalize_lists`` if you need parallel lists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">root</span> <span class="o">=</span> <span class="n">_resolve_data_dir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_discover_mass_folders</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="c1"># Backward-compat: older helper may not accept an explicit root</span>
         <span class="k">return</span> <span class="n">_discover_mass_folders</span><span class="p">()</span></div>
+
 
 
 <div class="viewcode-block" id="load_spectra_components_full">
 <a class="viewcode-back" href="../../api/generated/gammapbh.api.html#gammapbh.load_spectra_components_full">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_spectra_components_full</span><span class="p">(</span><span class="n">mass</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return the *raw* return from the CLI loader (dict, tuple, etc.).</span>
+<span class="sd">    Load the *raw* spectral data structure for a given mass.</span>
+
+<span class="sd">    This returns the unmodified output of the lower-level loader (dict/tuple),</span>
+<span class="sd">    which may contain separate primary/secondary energy axes and component</span>
+<span class="sd">    arrays on their native grids.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mass : float | str</span>
+<span class="sd">        Target mass (e.g. ``3.0e15``). May be numeric or a folder-style string.</span>
+<span class="sd">    data_dir : str | pathlib.Path | None</span>
+<span class="sd">        Optional override for the data root.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    object</span>
+<span class="sd">        The underlying loader&#39;s native output (implementation detail).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">root</span> <span class="o">=</span> <span class="n">_resolve_data_dir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
     <span class="n">masses_obj</span> <span class="o">=</span> <span class="n">discover_mass_folders</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
@@ -318,10 +439,54 @@
     <span class="k">return</span> <span class="n">_load_spectra_components</span><span class="p">(</span><span class="n">mass_dir</span><span class="p">)</span></div>
 
 
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_resample</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">x_old</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">x_new</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    1D linear interpolation helper with zero fill outside the original domain.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    y : numpy.ndarray</span>
+<span class="sd">        Values on the original grid ``x_old``.</span>
+<span class="sd">    x_old : numpy.ndarray</span>
+<span class="sd">        Original, strictly increasing grid.</span>
+<span class="sd">    x_new : numpy.ndarray</span>
+<span class="sd">        Target grid.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        Values resampled onto ``x_new``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">x_new</span><span class="p">,</span> <span class="n">x_old</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
 
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_normalize_to_E_comps_from_dict</span><span class="p">(</span><span class="n">out</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">align</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Normalize a dict-shaped loader output to a single energy grid + components.</span>
+
+<span class="sd">    Expected keys are ``&quot;energy_primary&quot;`` and/or ``&quot;energy_secondary&quot;`` with</span>
+<span class="sd">    component arrays suffixed by ``&quot;_primary&quot;`` or ``&quot;_secondary&quot;``. The</span>
+<span class="sd">    selected alignment is applied to return a uniform energy grid and aligned</span>
+<span class="sd">    component arrays.</span>
+
+<span class="sd">    If those explicit keys are absent, the function tries common fallbacks</span>
+<span class="sd">    (``&quot;E&quot;``, ``&quot;energy&quot;``, ``&quot;energies&quot;``, ``&quot;E_MeV&quot;``) and assumes all</span>
+<span class="sd">    components are already on that grid.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    out : dict</span>
+<span class="sd">        Loader output.</span>
+<span class="sd">    align : {&#39;primary&#39;,&#39;secondary&#39;,&#39;union&#39;,&#39;intersection&#39;}</span>
+<span class="sd">        Energy alignment rule.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    (numpy.ndarray, dict[str, numpy.ndarray])</span>
+<span class="sd">        ``(E, components_dict)`` with any of ``total_primary``, ``total_secondary``,</span>
+<span class="sd">        and ``total`` synthesized when possible.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Expect explicit energy axes</span>
     <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;energy_primary&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">out</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;energy_secondary&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">out</span><span class="p">):</span>
         <span class="c1"># Try generic keys as fallback</span>
@@ -385,7 +550,24 @@
 
     <span class="k">return</span> <span class="n">E</span><span class="p">,</span> <span class="n">comps</span>
 
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_normalize_to_E_comps</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">align</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Normalize any supported loader output to the canonical ``(E, comps)`` form.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    out : object</span>
+<span class="sd">        Either a tuple/list ``(E, components_dict)`` or a dict as described in</span>
+<span class="sd">        ``_normalize_to_E_comps_from_dict``.</span>
+<span class="sd">    align : {&#39;primary&#39;,&#39;secondary&#39;,&#39;union&#39;,&#39;intersection&#39;}</span>
+<span class="sd">        Energy alignment rule. Only used for the dict case.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    (numpy.ndarray, dict[str, numpy.ndarray])</span>
+<span class="sd">        Canonical tuple ``(E, components_dict)``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># tuple/list case</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">E</span><span class="p">,</span> <span class="n">comps</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -395,33 +577,94 @@
         <span class="k">return</span> <span class="n">_normalize_to_E_comps_from_dict</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">align</span><span class="p">)</span>
     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not normalize loader output to (E, components). Got: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 
+
 <div class="viewcode-block" id="load_spectra_components">
 <a class="viewcode-back" href="../../api/generated/gammapbh.api.html#gammapbh.load_spectra_components">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_spectra_components</span><span class="p">(</span><span class="n">mass</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">align</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;secondary&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Always return exactly (E, components_dict).</span>
-<span class="sd">    align: &#39;secondary&#39; (default), &#39;primary&#39;, &#39;union&#39;, or &#39;intersection&#39;</span>
+<span class="sd">    Load spectra for ``mass`` and **always** return ``(E, components_dict)``.</span>
+
+<span class="sd">    This is the user-friendly, shape-stable loader. It applies the requested</span>
+<span class="sd">    ``align`` rule to reconcile primary/secondary grids when necessary.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mass : float | str</span>
+<span class="sd">        Target mass (e.g. ``3.0e15``). May be numeric or a folder-style string.</span>
+<span class="sd">    data_dir : str | pathlib.Path | None</span>
+<span class="sd">        Optional override for the data root.</span>
+<span class="sd">    align : {&#39;secondary&#39;,&#39;primary&#39;,&#39;union&#39;,&#39;intersection&#39;}, default &#39;secondary&#39;</span>
+<span class="sd">        Energy alignment rule applied when the underlying data expose separate</span>
+<span class="sd">        grids.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    (numpy.ndarray, dict[str, numpy.ndarray])</span>
+<span class="sd">        Energy grid and component arrays aligned to that grid.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">load_spectra_components_full</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_normalize_to_E_comps</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="n">align</span><span class="p">)</span></div>
 
 
+
 <span class="c1"># Pass-throughs</span>
+
 <div class="viewcode-block" id="mass_function">
 <a class="viewcode-back" href="../../api/generated/gammapbh.api.html#gammapbh.mass_function">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">mass_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pass-through to the underlying mass function helper.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    *args, **kwargs :</span>
+<span class="sd">        Forwarded verbatim to the implementation in ``.cli``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Any</span>
+<span class="sd">        Whatever the underlying helper returns.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_mass_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
 
 <div class="viewcode-block" id="mass_function_exact">
 <a class="viewcode-back" href="../../api/generated/gammapbh.api.html#gammapbh.mass_function_exact">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">mass_function_exact</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pass-through to the exact (discrete) mass function helper.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    *args, **kwargs :</span>
+<span class="sd">        Forwarded verbatim to the implementation in ``.cli``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Any</span>
+<span class="sd">        Whatever the underlying helper returns.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_mass_function_exact</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
 
 <div class="viewcode-block" id="mass_function_lognormal">
 <a class="viewcode-back" href="../../api/generated/gammapbh.api.html#gammapbh.mass_function_lognormal">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">mass_function_lognormal</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pass-through to the log-normal mass function helper.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    *args, **kwargs :</span>
+<span class="sd">        Forwarded verbatim to the implementation in ``.cli``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Any</span>
+<span class="sd">        Whatever the underlying helper returns.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_mass_function_lognormal</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 </pre></div>
