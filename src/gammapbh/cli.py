@@ -1,4 +1,4 @@
-﻿# src/gammapbh/cli.py
+# src/gammapbh/cli.py
 """
 GammaPBHPlotter — interactive CLI to analyze and visualize Hawking-radiation
 gamma-ray spectra of primordial black holes (PBHs).
